@@ -18,3 +18,9 @@ class Character:
     # Moves Character to selected Tile, using x,y coordinates
     def Move(self, x, y):
         pass
+
+class Thief(Character):
+    pass
+
+class Guard(Character):
+    pass
