@@ -7,7 +7,7 @@ class Tile:
     occupied = False
 
     # X and y are the x,y coordinates of the tile on the map.
-    #Type is which type of tile it is
+    #Type is which type of tile it is.  0 is grass, 1 is forest, 2 is rock
     def __init__(self, x, y, type):
         self.x = x
         self.y = y
