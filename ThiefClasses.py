@@ -49,15 +49,15 @@ class Sprinter(Thief):
             self.energy -= 3
             self.has_treasure = False
             target.has_treasure = True
-        else
+        else:
             pass
 
     # Leaps to the top of a nearby wall
     def Vault(self, target):
-        if (target.type = 2):
+        if (target.type == 2):
             self.energy -= 4
             self.location = target
-        else
+        else:
             pass
 
 class Shadow(Thief):
@@ -71,13 +71,3 @@ class Shadow(Thief):
     def Dark_warp(self, target):
         self.energy -= 4
         self.location = target
-
-
-
-
-
-
-
-
-
-    pass

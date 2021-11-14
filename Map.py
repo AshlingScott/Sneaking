@@ -1,5 +1,6 @@
-#contains classes for all resources used by Characters
+from random import randrange
 
+# Contains classes used for making and displaying the map and tile grid
 # Tiles are locations on the grid map.  Characters always occupy a Tile.
 # Different kind of tiles have different movement and vision rules
 class Tile:
@@ -7,7 +8,7 @@ class Tile:
     occupied = False
 
     # X and y are the x,y coordinates of the tile on the map.
-    #Type is which type of tile it is.  0 is grass, 1 is forest, 2 is rock
+    # Type is which type of tile it is.  0 is grass, 1 is forest, 2 is rock
     def __init__(self, x, y, type):
         self.x = x
         self.y = y
@@ -15,6 +16,27 @@ class Tile:
 
 
 # Maps consist of a grid of Tiles
+# Currently generates a random map
 class Map:
-    def __init__(self, tile_list):
+    def __init__(self):
+        tile_list = []
+        x = 0
+        y = 0
+        for x in range(100):
+            x += 1
+            if (x == 10):
+                x = 0
+                y += 1
+
+            tile = Tile(x, y, randrange(0,3))
+            tile_list.append(tile)
+
         self.tile_list = tile_list
+
+    # Prints out the map as an array of 10x10
+    def print_map(self):
+        for x in range(10):
+            map_array = ""
+            for y in range(10):
+                map_array = map_array + str(self.tile_list[(x*10) + y].type)
+            print(map_array)

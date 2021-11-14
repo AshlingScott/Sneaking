@@ -26,8 +26,8 @@ class Golem(Guard):
 
     # Smash a target wall, turning it into grass
     def Smash(self, target):
-        if (target.type = 2):
+        if (target.type == 2):
             self.energy -= 3
             target.type = 0
-        else
+        else:
             pass
