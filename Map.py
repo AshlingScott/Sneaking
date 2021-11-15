@@ -4,7 +4,7 @@ from random import randrange
 # Tiles are locations on the grid map.  Characters always occupy a Tile.
 # Different kind of tiles have different movement and vision rules
 class Tile:
-
+    # Whether a tile has a Character on it
     occupied = False
 
     # X and y are the x,y coordinates of the tile on the map.
@@ -38,5 +38,5 @@ class Map:
         for x in range(10):
             map_array = ""
             for y in range(10):
-                map_array = map_array + str(self.tile_list[(x*10) + y].type)
+                map_array = map_array + " " + str(self.tile_list[(x*10) + y].type)
             print(map_array)
