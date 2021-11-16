@@ -3,7 +3,6 @@
 from Character import *
 
 class Blood_hunter(Guard):
-
     # Smell nearby enemies and reveal them
     def blood_scent(self):
         self.energy -= 3
@@ -15,9 +14,8 @@ class Blood_hunter(Guard):
         # Todo: if thieves are in the area, kill them
 
 class Golem(Guard):
-
     # Charges toward a target, disabling them
-    def bharge(self, target):
+    def charge(self, target):
         self.energy -= 5
         self.location = target
 
@@ -30,3 +28,24 @@ class Golem(Guard):
             target.type = 0
         else:
             pass
+
+class Techie(Guard):
+    # Drop a stasis trap on a tile, disables thieves who step too close
+    def stasis_trap(self, target):
+        if (target.type == 0):
+            self.energy -= 5
+            #Todo: create summon on this tiles
+        else:
+            pass
+
+    # Scan a target area, giving temporary Vision
+    def scan(self, map, target):
+        self.energy -= 4
+        self.visible_tiles.append(target)
+        #Todo: add surrounding tiles to visible_tiles as well
+
+    # Reduce vision of all enemies on the map_array
+    def hack(self, thief_list):
+        self.energy -= 3
+        for x in range(len(thief_list)):
+            thief_list[x].vision -= 2

@@ -36,7 +36,6 @@ class Druid(Thief):
         target.type = 1
 
 class Sprinter(Thief):
-
     # Run very fast for one round
     def sprint(self):
         self.energy -= 3
@@ -60,7 +59,6 @@ class Sprinter(Thief):
             pass
 
 class Shadow(Thief):
-
     # Becomes covered in shadows, gaining increased stealth
     def shadow_dance(self):
         self.energy -= 2

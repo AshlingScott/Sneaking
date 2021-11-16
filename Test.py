@@ -4,6 +4,13 @@ from Character import *
 from ThiefClasses import *
 from GuardClasses import *
 from Item import *
+from Alter import *
+
+map = Map()
+map.print_map()
+map.simplify()
+print("   ")
+map.print_map()
 
 chara = Character(5, 5, 2, 3, 5)
 
@@ -26,13 +33,16 @@ golu = Golem(9, 9, 4, 5, 6)
 
 print(druwu.location)
 print(golu.location)
-golu.move(9,8)
+golu.move(map, 9, 8)
 print(golu.location)
-
-map = Map()
-map.print_map()
 
 druwu.items.append(Item(1, 0))
 druwu.print_items()
 druwu.items.append(Item(0, 0))
 druwu.print_items()
+
+druwu.alter.append(Alter(False, 2, True))
+druwu.upkeep()
+druwu.upkeep()
+druwu.upkeep()
+druwu.upkeep()

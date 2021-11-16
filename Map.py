@@ -14,7 +14,6 @@ class Tile:
         self.y = y
         self.type = type
 
-
 # Maps consist of a grid of Tiles
 # Currently generates a random map
 class Map:
@@ -28,15 +27,21 @@ class Map:
                 x = 0
                 y += 1
 
-            tile = Tile(x, y, randrange(0,3))
-            tile_list.append(tile)
+            #tile = Tile(x, y, randrange(0,3))
+            tile_list.append(Tile(x, y, randrange(0,3)))
 
         self.tile_list = tile_list
 
     # Prints out the map as an array of 10x10
     def print_map(self):
-        for x in range(10):
+        for y in range(10):
             map_array = ""
-            for y in range(10):
-                map_array = map_array + " " + str(self.tile_list[(x*10) + y].type)
+            for x in range(10):
+                map_array = map_array + " " + str(self.tile_list[(y*10) + x].type)
             print(map_array)
+
+    # Simplifies the map by reducing the value of each tiles type, min of 0
+    def simplify(self):
+        for x in range(100):
+            if (self.tile_list[x].type > 0):
+                self.tile_list[x].type -= 1

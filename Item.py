@@ -7,7 +7,6 @@ item_dictionary = {
 
 #Items that characters equip
 class Item:
-
     def __init__ (self, id, cost):
         self.id = id
         self.cost = cost
