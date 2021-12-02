@@ -1,8 +1,21 @@
 # The different specific Guards that can be played
 
-from Character import *
+from Unit import *
 
 class Blood_hunter(Guard):
+    # Represented on the map by B
+    def get_symbol(self):
+        return "B"
+
+    def print_stats(self):
+        print("Blood Hunter" + "\nMovement: " + str(self.movement) + "\nVision: "
+        + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
+        + str(self.energy_gain))
+
+    # Guards can't die
+    def kill(self):
+        pass
+
     # Smell nearby enemies and reveal them
     def blood_scent(self):
         self.energy -= 3
@@ -14,6 +27,19 @@ class Blood_hunter(Guard):
         # Todo: if thieves are in the area, kill them
 
 class Golem(Guard):
+    # Represented on the map by G
+    def get_symbol(self):
+        return "G"
+
+    def print_stats(self):
+        print("Golem" + "\nMovement: " + str(self.movement) + "\nVision: "
+        + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
+        + str(self.energy_gain))
+
+    # Guards can't die
+    def kill(self):
+        pass
+
     # Charges toward a target, disabling them
     def charge(self, target):
         self.energy -= 5
@@ -30,6 +56,19 @@ class Golem(Guard):
             pass
 
 class Techie(Guard):
+    # Represented on the map by T
+    def get_symbol(self):
+        return "T"
+
+    def print_stats(self):
+        print("Techie" + "\nMovement: " + str(self.movement) + "\nVision: "
+        + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
+        + str(self.energy_gain))
+
+    # Guards can't die
+    def kill(self):
+        pass
+
     # Drop a stasis trap on a tile, disables thieves who step too close
     def stasis_trap(self, target):
         if (target.type == 0):

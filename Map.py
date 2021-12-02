@@ -7,12 +7,13 @@ class Tile:
     # Whether a tile has a Character on it
     occupied = False
 
-    # X and y are the x,y coordinates of the tile on the map.
+    # ID is the id of the tile in the maps tile_list
     # Type is which type of tile it is.  0 is grass, 1 is forest, 2 is rock
-    def __init__(self, x, y, type):
-        self.x = x
-        self.y = y
+    # Occupant is a unit standing on the tile
+    def __init__(self, id, type):
+        self.id = id
         self.type = type
+        self.occupant = None
 
 # Maps consist of a grid of Tiles
 # Currently generates a random map
@@ -27,8 +28,7 @@ class Map:
                 x = 0
                 y += 1
 
-            #tile = Tile(x, y, randrange(0,3))
-            tile_list.append(Tile(x, y, randrange(0,3)))
+            tile_list.append(Tile((y*10 + x), randrange(0,3)))
 
         self.tile_list = tile_list
 
@@ -45,3 +45,20 @@ class Map:
         for x in range(100):
             if (self.tile_list[x].type > 0):
                 self.tile_list[x].type -= 1
+
+    # Return a set of tiles in a square, within a range of target tile
+    def grab_square(self, map, target, _range_):
+        tileset = set()
+        # Sets the squares borders
+        for a in range(-_range_, _range_ + 1):
+            for b in range(-_range_, _range_ + 1):
+                # Check that x value is between 0 and 9
+                x = int(target.id / 10) + a
+                if (0 <= a < 10):
+                    # Check that y value is between 0 and 9
+                    y = int(target.id % 10) + b
+                    if (0 <= b <= 10):
+                        # Add tile after all criteria met
+                        tileset.add(map.tile_list[(y * 10) + x])
+
+        return tileset

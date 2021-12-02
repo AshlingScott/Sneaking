@@ -1,7 +1,7 @@
 # Summons, created on the map to be separate units
 # Has similarities with Character class, but functionally seperate
 
-from Character import *
+from Unit import *
 
 class Summons:
     visible = False

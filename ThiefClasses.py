@@ -1,18 +1,36 @@
 # The different specific Thieves that can be played
 
-from Character import *
+from Unit import *
 
 class Druid(Thief):
-    # form represents which form the Druid is in
+    # Form represents which form the Druid is in
     # 0 = base, 1 = hawk, 2 = squirrel
     form = 0
 
-    # wraps the target in roots, disabling for 1 turn
+    # Represented on the map with D
+    def get_symbol(self):
+        return "D"
+
+    def print_stats(self):
+        print("Druid" + "\nMovement: " + str(self.movement) + "\nVision: "
+        + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
+        + str(self.energy_gain) + "\nCurrent Form: ")
+        if (self.form == 0):
+            print("Human")
+        if (self.form == 1):
+            print("Hawk")
+        if (self.form == 2):
+            print("Squirrel")
+
+    def kill(self):
+        alive = False
+
+    # Wraps the target in roots, disabling for 1 turn
     def entangle(self, target):
         self.energy -= 3
         target.disabled = True
 
-    # transform into a hawk, gaining vision and movement and flying
+    # Transform into a hawk, gaining vision and movement and flying
     def hawk_form(self):
         self.energy -= 3
         self.movement += 2
@@ -21,7 +39,7 @@ class Druid(Thief):
         self.form = 1
         self.flying = True
 
-    # transform into a Squirrel, gaining movement speed
+    # Transform into a Squirrel, gaining movement speed
     def squirrel_form(self):
         self.energy -= 2
         self.movement += 4
@@ -29,13 +47,25 @@ class Druid(Thief):
         self.form = 2
         self.stealth = 1
 
-    # create a patch of trees in a 3x3 grid
+    # Create a patch of trees in a 3x3 grid
     def overgrowth(self, target):
         self.energy -= 5
 
         target.type = 1
 
 class Sprinter(Thief):
+    # Represented on the map with S
+    def get_symbol(self):
+        return "S"
+
+    def print_stats(self):
+        print("Druid" + "\nMovement: " + str(self.movement) + "\nVision: "
+        + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
+        + str(self.energy_gain))
+
+    def kill(self):
+        alive = False
+
     # Run very fast for one round
     def sprint(self):
         self.energy -= 3
@@ -59,6 +89,18 @@ class Sprinter(Thief):
             pass
 
 class Shadow(Thief):
+    # Represented on the map with H
+    def get_symbol(self):
+        return "H"
+
+    def print_stats(self):
+        print("Shadow" + "\nMovement: " + str(self.movement) + "\nVision: "
+        + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
+        + str(self.energy_gain))
+
+    def kill(self):
+        alive = False
+
     # Becomes covered in shadows, gaining increased stealth
     def shadow_dance(self):
         self.energy -= 2
