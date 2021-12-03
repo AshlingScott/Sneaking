@@ -5,9 +5,13 @@ from ThiefClasses import *
 from GuardClasses import *
 from Item import *
 from Alter import *
+import os
 
-map = Map()
+print(os.listdir())
+
+map = Map(4)
 map.print_map()
+map = Map("Horseshoe")
 
 druwu = Druid(22, 5, 3, 5)
 print(druwu.form)

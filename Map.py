@@ -1,6 +1,8 @@
-from random import randrange
-
 # Contains classes used for making and displaying the map and tile grid
+
+from random import randrange
+import csv
+
 # Tiles are locations on the grid map.  Characters always occupy a Tile.
 # Different kind of tiles have different movement and vision rules
 class Tile:
@@ -16,21 +18,38 @@ class Tile:
         self.occupant = None
 
 # Maps consist of a grid of Tiles
-# Currently generates a random map
+# Can generate maps from csv files, or completely randomise them
+# Use string filename for csv, any int for random
 class Map:
-    def __init__(self):
-        tile_list = []
-        x = 0
-        y = 0
-        for x in range(100):
-            x += 1
-            if (x == 10):
-                x = 0
-                y += 1
+    # Loads a map from a csv file
+    def __init__(self, *args):
+        self.tile_list = []
+        if isinstance(args[0], str):
+            rows = []
+            with open("MapFiles/" + args[0] + ".csv", 'r') as file:
+                csvreader = csv.reader(file)
+                for y in range(10):
+                    line = next(csvreader)
+                    for x in range(10):
+                        self.tile_list.append(Tile((y * 10 + x ), int(line[x])))
 
-            tile_list.append(Tile((y*10 + x), randrange(0,3)))
+        # If non-string argument, randomly generates a map instead
+        else:
+            random_list = []
+            x = 0
+            y = 0
+            for x in range(100):
+                x += 1
+                # Give triple chance for fields to spawn
+                z = randrange(0,5)
+                if (z == 3) or (z == 4):
+                    z = 0
+                if (x == 10):
+                    x = 0
+                    y += 1
+                random_list.append(Tile((y*10 + x), z))
 
-        self.tile_list = tile_list
+            self.tile_list = random_list
 
     # Prints out the map as an array of 10x10
     def print_map(self):
