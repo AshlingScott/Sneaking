@@ -24,6 +24,7 @@ class Map:
     # Loads a map from a csv file
     def __init__(self, *args):
         self.tile_list = []
+        print("\n")
         if isinstance(args[0], str):
             rows = []
             with open("MapFiles/" + args[0] + ".csv", 'r') as file:
@@ -33,11 +34,12 @@ class Map:
                     for x in range(10):
                         self.tile_list.append(Tile((y * 10 + x ), int(line[x])))
 
+            # Names the map
             self.name = args[0]
 
         # If non-string argument, randomly generates a map instead
         else:
-            x = 0
+            print("\n")
             y = 0
             for x in range(100):
                 x += 1
@@ -50,6 +52,7 @@ class Map:
                     y += 1
                 self.tile_list.append(Tile((y*10 + x), z))
 
+            # Names the map
             self.name = "Random Map"
 
     # Prints out the map as an array of 10x10

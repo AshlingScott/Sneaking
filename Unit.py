@@ -19,11 +19,11 @@ class Unit(ABC):
     # List of all summons controlled by character
     summons = []
 
-    # Universal Character Attributes
-    # Location: x,y coordinates of this Characters position on the grid
-    # Movement: How many tiles a Character can move in one turning
-    # Vision: How far a Character can see
-    # Energy_gain: How much energy a Character gains each turn
+    # Universal Unit Attributes
+    # Location: x,y coordinates of this Units position on the grid
+    # Movement: How many tiles a Unit can move in one turning
+    # Vision: How far a Unit can see
+    # Energy_gain: How much energy a Unit gains each turn
     def __init__(self, location, movement, vision, energy_gain):
         self.location = location
         self.movement = movement
@@ -62,27 +62,41 @@ class Unit(ABC):
         for x in range(len(self.items)):
             print(self.items[x].description)
 
-# Thief characters:  Sneak into the base and steal treasures to win rounds
+# Thief Unit:  Sneak into the base and steal treasures to win rounds
 class Thief(Unit):
     alive = True
 
     # Moves to target tile, Thieves can move on 0 or 1 type tiles
-    def move(self, map, location, moving_character):
-        if(map.tile_list[location].type <= 1):
-            self.location = location
-            map.tile_list[location].occupied = True
-            map.tile_list[location].occupant = moving_character
+    def move(self, map, new_location):
+        if(map.tile_list[new_location].type <= 1):
+            # Remove from previous location
+            map.tile_list[self.location].occupant = None
+            map.tile_list[self.location].occupied = False
+            # Update to new location
+            self.location = new_location
+            map.tile_list[new_location].occupied = True
+            map.tile_list[new_location].occupant = self
         else:
+            # If move isn't valid, return as a fail
             print("Cannot move to location")
+            return True
 
-# Guard characters: Prevent thieves from breaking in to win rounds
+# Guard Unit: Prevent thieves from breaking in to win rounds
 class Guard(Unit):
     # List of tiles that are lighted up by character
     light_area = []
 
-    # Moves to target tile, Guards can only move on 0 type tiles
-    def move(self, map, x, y):
-        if(map.tile_list[(y*10 + x)].type == 0):
-            self.location = (x, y)
+    # Moves to target tile, Guards can only move on 0 tiles
+    def move(self, map, new_location):
+        if(map.tile_list[new_location].type == 0):
+            # Remove from previous location
+            map.tile_list[self.location].occupant = None
+            map.tile_list[self.location].occupied = False
+            # Update to new location
+            self.location = new_location
+            map.tile_list[new_location].occupied = True
+            map.tile_list[new_location].occupant = self
         else:
+            # If move isn't valid, return as a fail
             print("Cannot move to location")
+            return True

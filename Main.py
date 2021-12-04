@@ -36,7 +36,7 @@ def test():
 
     print(druwu.location)
     print(gol.location)
-    gol.move(map, 9, 8)
+    gol.move(map, 9)
     print(gol.location)
 
     map.print_map()
@@ -65,8 +65,26 @@ def char_select():
     elif (char == "Techie"):
         return Techie(6, 4, 8, 2)
     else:
+        # If invalid input, re-enter char_select
         print("Not a valid character")
         char_select()
+
+# Prompt to choose a tile to move to
+def move_prompt():
+    try:
+        # Tries if a valid int is input
+        choice = int(input("Move to tile - Input tile id (0 to 99)"))
+    except:
+        # Give error message and re-enter move prompt
+        print("Invalid - Input an int 0 to 99")
+        move_prompt()
+        return
+    if isinstance(choice, int):
+        # Try to make move
+        failed = player_char.move(map, choice)
+        # If move was a failure, re-enter move prompt
+        if failed:
+            move_prompt()
 
 # Main execution
 player_char = char_select()
@@ -74,5 +92,7 @@ print("\n")
 player_char.print_stats()
 
 map = Map("Horseshoe")
-player_char.move(map, 42, player_char)
+player_char.move(map, 42)
+map.print_map()
+move_prompt()
 map.print_map()
