@@ -12,15 +12,15 @@ class Druid(Thief):
         return "D"
 
     def print_stats(self):
+        if (self.form == 0):
+            form = "Human"
+        if (self.form == 1):
+            form = "Hawk"
+        if (self.form == 2):
+            form = "Squirrel"
         print("Druid" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\nCurrent Form: ")
-        if (self.form == 0):
-            print("Human")
-        if (self.form == 1):
-            print("Hawk")
-        if (self.form == 2):
-            print("Squirrel")
+        + str(self.energy_gain) + "\nCurrent Form: " + form)
 
     def kill(self):
         alive = False

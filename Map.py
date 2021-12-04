@@ -33,9 +33,10 @@ class Map:
                     for x in range(10):
                         self.tile_list.append(Tile((y * 10 + x ), int(line[x])))
 
+            self.name = args[0]
+
         # If non-string argument, randomly generates a map instead
         else:
-            random_list = []
             x = 0
             y = 0
             for x in range(100):
@@ -47,17 +48,21 @@ class Map:
                 if (x == 10):
                     x = 0
                     y += 1
-                random_list.append(Tile((y*10 + x), z))
+                self.tile_list.append(Tile((y*10 + x), z))
 
-            self.tile_list = random_list
+            self.name = "Random Map"
 
     # Prints out the map as an array of 10x10
+    # Prints character symbols on occupied space, tile type on empty space
     def print_map(self):
         for y in range(10):
-            map_array = ""
+            map_line = ""
             for x in range(10):
-                map_array = map_array + " " + str(self.tile_list[(y*10) + x].type)
-            print(map_array)
+                if (self.tile_list[(y * 10 + x)].occupied == True):
+                    map_line+=self.tile_list[(y * 10 + x)].occupant.get_symbol() + " "
+                else:
+                    map_line += str(self.tile_list[(y * 10 + x)].type) + " "
+            print(map_line)
 
     # Simplifies the map by reducing the value of each tiles type, min of 0
     def simplify(self):

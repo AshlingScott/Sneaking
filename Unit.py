@@ -67,9 +67,11 @@ class Thief(Unit):
     alive = True
 
     # Moves to target tile, Thieves can move on 0 or 1 type tiles
-    def move(self, map, x, y):
-        if(map.tile_list[(y*10 + x)].type <= 1):
-            self.location = (x, y)
+    def move(self, map, location, moving_character):
+        if(map.tile_list[location].type <= 1):
+            self.location = location
+            map.tile_list[location].occupied = True
+            map.tile_list[location].occupant = moving_character
         else:
             print("Cannot move to location")
 
