@@ -2,6 +2,8 @@
 
 from Unit import *
 
+# Blood Hunter
+# Guard that tracks down enemies through the forest
 class Blood_hunter(Guard):
     # Represented on the map by B
     def get_symbol(self):
@@ -26,6 +28,8 @@ class Blood_hunter(Guard):
         self.energy -= 5
         # Todo: if thieves are in the area, kill them
 
+# Golem
+# Beefy Guard thats resilient and strong
 class Golem(Guard):
     # Represented on the map by G
     def get_symbol(self):
@@ -55,6 +59,8 @@ class Golem(Guard):
         else:
             pass
 
+# Techie
+# Trap-laying Guard with unique utility
 class Techie(Guard):
     # Represented on the map by T
     def get_symbol(self):

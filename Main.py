@@ -8,6 +8,7 @@ from GuardClasses import *
 from Item import *
 from Alter import *
 
+# Various tests
 def test():
     print(os.listdir())
 
@@ -92,6 +93,7 @@ print("\n")
 player_char.print_stats()
 
 map = Map("Horseshoe")
+player_char.kill()
 player_char.move(map, 42)
 map.print_map()
 move_prompt()

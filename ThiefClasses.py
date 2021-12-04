@@ -2,6 +2,8 @@
 
 from Unit import *
 
+# Druid
+# Flexible Thieves that can change their form to suit their purpose
 class Druid(Thief):
     # Form represents which form the Druid is in
     # 0 = base, 1 = hawk, 2 = squirrel
@@ -23,7 +25,7 @@ class Druid(Thief):
         + str(self.energy_gain) + "\nCurrent Form: " + form)
 
     def kill(self):
-        alive = False
+        self.alive = False
 
     # Wraps the target in roots, disabling for 1 turn
     def entangle(self, target):
@@ -53,6 +55,8 @@ class Druid(Thief):
 
         target.type = 1
 
+# Sprinter
+# Agile Thief able to outrun enemies
 class Sprinter(Thief):
     # Represented on the map with S
     def get_symbol(self):
@@ -88,6 +92,8 @@ class Sprinter(Thief):
         else:
             pass
 
+# Shadow
+# Slippery Thief that hides in the darkness
 class Shadow(Thief):
     # Represented on the map with H
     def get_symbol(self):

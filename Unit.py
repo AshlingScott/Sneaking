@@ -1,14 +1,21 @@
-#Character class.  Characters can be either Thieves, or Guards
+# Unit class - Abstract
+# Class representing Units that move on the maps
+# Units can be Thief or Guard, which are opposing types
 from abc import *
 from Map import *
 
 class Unit(ABC):
+    # Whether enemy team can see Unit
     visible = False
+    # Disabled units lose their next turn
     disabled = False
+    # Flying units can move on any tiles and can see over walls/forest
     flying = False
+    # Whether Unit is holding the treasure
     has_treasure = False
     # Stealth value 0 is fully visible, 1 is light invis, 2 is heavy invis
     stealth = 0
+    # Energy is a resource used for abilities
     energy = 0
     # List of tiles that are visible by character
     visible_tiles = []
@@ -62,8 +69,10 @@ class Unit(ABC):
         for x in range(len(self.items)):
             print(self.items[x].description)
 
-# Thief Unit:  Sneak into the base and steal treasures to win rounds
+# Thief Unit - Abstract
+#Sneak into the base and steal treasures to win rounds
 class Thief(Unit):
+    # Whether the Thief is alive
     alive = True
 
     # Moves to target tile, Thieves can move on 0 or 1 type tiles
@@ -81,7 +90,8 @@ class Thief(Unit):
             print("Cannot move to location")
             return True
 
-# Guard Unit: Prevent thieves from breaking in to win rounds
+# Guard Unit - Abstract
+# Prevent thieves from breaking in to win rounds
 class Guard(Unit):
     # List of tiles that are lighted up by character
     light_area = []
