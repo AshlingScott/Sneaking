@@ -77,7 +77,7 @@ class Thief(Unit):
 
     # Moves to target tile, Thieves can move on 0 or 1 type tiles
     def move(self, map, new_location):
-        if(map.tile_list[new_location].type <= 1):
+        if (map.tile_list[new_location].type <= 1):
             # Remove from previous location
             map.tile_list[self.location].occupant = None
             map.tile_list[self.location].occupied = False
@@ -89,6 +89,18 @@ class Thief(Unit):
             # If move isn't valid, return as a fail
             print("Cannot move to location")
             return True
+
+    # Gets vision range of Unit.  Thieves can see type 0 and 1 tiles
+    def get_vision(self, map):
+        vision_tiles = set()
+        # Grab a square based on Units vision
+        grab_vision = map.grab_square(map, map.tile_list[self.location], self.vision)
+        # Adds only tiles of type 1 or 0 to the set
+        for val in grab_vision:
+            if (val.type <= 1):
+                vision_tiles.add(val)
+
+        return vision_tiles
 
 # Guard Unit - Abstract
 # Prevent thieves from breaking in to win rounds
@@ -98,7 +110,7 @@ class Guard(Unit):
 
     # Moves to target tile, Guards can only move on 0 tiles
     def move(self, map, new_location):
-        if(map.tile_list[new_location].type == 0):
+        if (map.tile_list[new_location].type == 0):
             # Remove from previous location
             map.tile_list[self.location].occupant = None
             map.tile_list[self.location].occupied = False
@@ -110,3 +122,15 @@ class Guard(Unit):
             # If move isn't valid, return as a fail
             print("Cannot move to location")
             return True
+
+    # Gets vision range of Unit.  Guards can see type 0 tiles only
+    def get_vision(self, map):
+        vision_tiles = set()
+        # Grab a square based on Units vision
+        grab_vision = map.grab_square(map, map.tile_list[self.location], self.vision)
+        # Adds only tiles of type 1 or 0 to the set
+        for val in grab_vision:
+            if (val.type == 0):
+                vision_tiles.add(val)
+
+        return vision_tiles

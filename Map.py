@@ -75,17 +75,20 @@ class Map:
 
     # Return a set of tiles in a square, within a range of target tile
     def grab_square(self, map, target, _range_):
-        tileset = set()
+        tileset = []
         # Sets the squares borders
-        for a in range(-_range_, _range_ + 1):
-            for b in range(-_range_, _range_ + 1):
+        for x in range(-_range_, _range_ + 1):
+            for y in range(-_range_, _range_ + 1):
                 # Check that x value is between 0 and 9
-                x = int(target.id / 10) + a
+                a = int(target.id / 10) + x
                 if (0 <= a < 10):
                     # Check that y value is between 0 and 9
-                    y = int(target.id % 10) + b
-                    if (0 <= b <= 10):
+                    b = int(target.id % 10) + y
+                    if (0 <= b < 10):
                         # Add tile after all criteria met
-                        tileset.add(map.tile_list[(y * 10) + x])
+                        tileset.append(map.tile_list[(a * 10) + b])
 
+        #print("tileset: ")
+        #for val in tilset:
+            #print(tileset.)
         return tileset

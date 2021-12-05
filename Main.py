@@ -58,7 +58,7 @@ def test():
 def char_select():
     char = input("Choose your Character - Druid, Shadow, Golem, Techie\n")
     if (char == "Druid"):
-        return Druid(2, 6, 7, 1)
+        return Druid(2, 3, 2, 1)
     elif (char == "Shadow"):
         return Shadow(6, 6, 4, 9)
     elif (char == "Golem"):
@@ -98,3 +98,5 @@ player_char.move(map, 42)
 map.print_map()
 move_prompt()
 map.print_map()
+
+player_char.get_vision(map)
