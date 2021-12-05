@@ -88,7 +88,4 @@ class Map:
                         # Add tile after all criteria met
                         tileset.append(map.tile_list[(a * 10) + b])
 
-        #print("tileset: ")
-        #for val in tilset:
-            #print(tileset.)
         return tileset

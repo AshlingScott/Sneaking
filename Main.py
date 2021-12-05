@@ -76,14 +76,14 @@ def move_prompt():
         # Tries if a valid int is input
         choice = int(input("Move to tile - Input tile id (0 to 99)"))
     except:
-        # Give error message and re-enter move prompt
-        print("Invalid - Input an int 0 to 99")
+        # Give error message and recurse move
+        print("Invalid - Input a number 0 to 99")
         move_prompt()
         return
     if isinstance(choice, int):
         # Try to make move
         failed = player_char.move(map, choice)
-        # If move was a failure, re-enter move prompt
+        # If move was a failure, recurse move
         if failed:
             move_prompt()
 

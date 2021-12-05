@@ -1,4 +1,4 @@
-# Unit class - Abstract
+# Unit - Abstract
 # Class representing Units that move on the maps
 # Units can be Thief or Guard, which are opposing types
 from abc import *
@@ -17,8 +17,8 @@ class Unit(ABC):
     stealth = 0
     # Energy is a resource used for abilities
     energy = 0
-    # List of tiles that are visible by character
-    visible_tiles = []
+    # Set of tiles that are visible by character
+    visible_tiles = set()
     # List of items held
     items = []
     # List of all alters affecting the character
@@ -26,9 +26,8 @@ class Unit(ABC):
     # List of all summons controlled by character
     summons = []
 
-    # Universal Unit Attributes
-    # Location: x,y coordinates of this Units position on the grid
-    # Movement: How many tiles a Unit can move in one turning
+    # Location: ID of this Units tile on the grid
+    # Movement: How many tiles a Unit can move in one turn
     # Vision: How far a Unit can see
     # Energy_gain: How much energy a Unit gains each turn
     def __init__(self, location, movement, vision, energy_gain):
@@ -69,7 +68,7 @@ class Unit(ABC):
         for x in range(len(self.items)):
             print(self.items[x].description)
 
-# Thief Unit - Abstract
+# Thief - Abstract
 #Sneak into the base and steal treasures to win rounds
 class Thief(Unit):
     # Whether the Thief is alive
@@ -85,12 +84,14 @@ class Thief(Unit):
             self.location = new_location
             map.tile_list[new_location].occupied = True
             map.tile_list[new_location].occupant = self
+            # Update visible_tiles
+            visible_tiles = self.get_vision(map)
         else:
             # If move isn't valid, return as a fail
             print("Cannot move to location")
             return True
 
-    # Gets vision range of Unit.  Thieves can see type 0 and 1 tiles
+    # Gets vision range of Unit, Thieves can see type 0 and 1 tiles
     def get_vision(self, map):
         vision_tiles = set()
         # Grab a square based on Units vision
@@ -102,7 +103,7 @@ class Thief(Unit):
 
         return vision_tiles
 
-# Guard Unit - Abstract
+# Guard - Abstract
 # Prevent thieves from breaking in to win rounds
 class Guard(Unit):
     # List of tiles that are lighted up by character
@@ -118,12 +119,14 @@ class Guard(Unit):
             self.location = new_location
             map.tile_list[new_location].occupied = True
             map.tile_list[new_location].occupant = self
+            # Update visible_tiles
+            visible_tiles = self.get_vision(map)
         else:
             # If move isn't valid, return as a fail
             print("Cannot move to location")
             return True
 
-    # Gets vision range of Unit.  Guards can see type 0 tiles only
+    # Gets visible tiles of Unit.  Guards can see type 0 tiles only
     def get_vision(self, map):
         vision_tiles = set()
         # Grab a square based on Units vision
