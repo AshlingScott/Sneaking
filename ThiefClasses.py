@@ -3,10 +3,10 @@
 from Unit import *
 
 # Druid
-# Flexible Thieves that can change their form to suit their purpose
+# Flexible Thief that can change their form to suit their purpose
 class Druid(Thief):
     # Form represents which form the Druid is in
-    # 0 = base, 1 = hawk, 2 = squirrel
+    # 0 = human, 1 = hawk, 2 = squirrel
     form = 0
 
     # Represented on the map with D
@@ -84,7 +84,10 @@ class Sprinter(Thief):
     def print_stats(self):
         print("Druid" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain))
+        + str(self.energy_gain) + "\nAbilities\n"
+        + "Sprint: Run faster for 2 turns\n"
+        + "Throw: Throw an item or a treasure to another Thief\n"
+        + "Vault: Leap to target tile, can jump onto walls (can walk off later)")
 
     def kill(self):
         alive = False
@@ -101,15 +104,20 @@ class Sprinter(Thief):
             self.has_treasure = False
             target.has_treasure = True
         else:
-            pass
+            print("Nothing to throw!")
+        # TODO: Implement throwing other items besides treasure
 
-    # Leaps to the top of a nearby wall
-    def vault(self, target):
-        if (target.type == 2):
+    # Leaps to a tile, can target walls (you can walk off of walls as normal)
+    # Range of 2
+    def vault(self, map, target):
+        # Get list of tiles within range of 2
+        viable_tiles = map.grab_square(map, map.tile_list[self.location], 2)
+        # Check if target tile is within that list
+        if target in viable_tiles:
             self.energy -= 4
             self.location = target
         else:
-            pass
+            print("Location invalid, out of range")
 
 # Shadow
 # Slippery Thief that hides in the darkness

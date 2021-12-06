@@ -21,12 +21,11 @@ class Tile:
 # Can generate maps from csv files, or completely randomise them
 # Use string filename for csv, any int for random
 class Map:
-    # Loads a map from a csv file
     def __init__(self, *args):
         self.tile_list = []
         print("\n")
+        # Tries to load map from CSV file
         if isinstance(args[0], str):
-            rows = []
             try:
                 with open("MapFiles/" + args[0] + ".csv", 'r') as file:
                     csvreader = csv.reader(file)
@@ -77,6 +76,7 @@ class Map:
                 self.tile_list[x].type -= 1
 
     # Return a set of tiles in a square, within a range of target tile
+    # Used on vision ranges, potential movements, ability targetting
     def grab_square(self, map, target, _range_):
         tileset = []
         # Sets the squares borders
