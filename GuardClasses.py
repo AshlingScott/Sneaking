@@ -14,10 +14,6 @@ class Blood_hunter(Guard):
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
         + str(self.energy_gain))
 
-    # Guards can't die
-    def kill(self):
-        pass
-
     # Smell nearby enemies and reveal them
     def blood_scent(self):
         self.energy -= 3
@@ -39,10 +35,6 @@ class Golem(Guard):
         print("Golem" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
         + str(self.energy_gain))
-
-    # Guards can't die
-    def kill(self):
-        pass
 
     # Charges toward a target, disabling them
     def charge(self, target):
@@ -70,10 +62,6 @@ class Techie(Guard):
         print("Techie" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
         + str(self.energy_gain))
-
-    # Guards can't die
-    def kill(self):
-        pass
 
     # Drop a stasis trap on a tile, disables thieves who step too close
     def stasis_trap(self, target):

@@ -28,13 +28,11 @@ class Druid(Thief):
         + "Squirrel Form: Turn into a squirrel, gain movement and stealth\n"
         + "Overgrowth: Grow a patch of trees in an area\n")
 
-    def kill(self):
-        self.alive = False
-
     # Wraps the target in roots, disabling for 1 turn
     def entangle(self, target):
         self.energy -= 3
         target.disabled = True
+        # TODO: Make it an alter with duration
 
     # Transform into a hawk, gaining vision and flying
     def hawk_form(self):
@@ -89,13 +87,11 @@ class Sprinter(Thief):
         + "Throw: Throw an item or a treasure to another Thief\n"
         + "Vault: Leap to target tile, can jump onto walls (can walk off later)")
 
-    def kill(self):
-        alive = False
-
     # Run very fast for one round
     def sprint(self):
         self.energy -= 3
         self.movement += 3
+        # TODO: Make it an alter with duration
 
     # Throws an item to another Thief
     def throw(self, target):
@@ -129,17 +125,26 @@ class Shadow(Thief):
     def print_stats(self):
         print("Shadow" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain))
-
-    def kill(self):
-        alive = False
+        + str(self.energy_gain) + "\nAbilities\n"
+        + "Shadow Dance: Gain increased stealth for 2 turns\n"
+        + "Dark Warp: Teleport to target tile\n"
+        + "Blind: Reduce the vision of a Guard by 2 for 2 turns")
 
     # Becomes covered in shadows, gaining increased stealth
     def shadow_dance(self):
         self.energy -= 2
         self.stealth = 2
+        # TODO: Make it an alter with duration
 
     # Warps to target location
     def dark_warp(self, target):
         self.energy -= 4
         self.location = target
+
+    # Covers a guard in shadows, reducing their vision range
+    def blind(self, map, target):
+        self.energy -= 4
+        target.vision -= 2
+        # Immediately updates visiion of target guard
+        target.update_vision(map)
+        # TODO: Make it an alter with duration
