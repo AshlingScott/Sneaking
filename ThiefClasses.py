@@ -22,7 +22,11 @@ class Druid(Thief):
             form = "Squirrel"
         print("Druid" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\nCurrent Form: " + form)
+        + str(self.energy_gain) + "\nCurrent Form: " + form + "\nAbilities\n"
+        + "Entangle: Trap an enemy with roots\n"
+        + "Hawk Form: Turn into a hawk, gain flying and extra vision\n"
+        + "Squirrel Form: Turn into a squirrel, gain movement and stealth\n"
+        + "Overgrowth: Grow a patch of trees in an area\n")
 
     def kill(self):
         self.alive = False
@@ -32,28 +36,43 @@ class Druid(Thief):
         self.energy -= 3
         target.disabled = True
 
-    # Transform into a hawk, gaining vision and movement and flying
+    # Transform into a hawk, gaining vision and flying
     def hawk_form(self):
-        self.energy -= 3
-        self.movement += 2
-        self.vision += 3
+        # If in hawk form alread, swap to human
+        if (self.form == 1):
+            self.form = 0
+            self.vision -= 3
+            self.flying = False
+        # Otherwise switch to hawk
+        else:
+            self.form = 1
+            self.energy -= 3
+            self.vision += 3
+            self.flying = True
 
-        self.form = 1
-        self.flying = True
-
-    # Transform into a Squirrel, gaining movement speed
+    # Transform into a Squirrel, gaining movement speed and stealth
     def squirrel_form(self):
-        self.energy -= 2
-        self.movement += 4
-
-        self.form = 2
-        self.stealth = 1
+        # If in squirrel form alread, swap to human
+        if (self.form == 2):
+            self.form = 0
+            self.movement -= 2
+            self.stealth -=1
+        # Otherwise switch to squirrel
+        else:
+            self.form = 2
+            self.energy -= 3
+            self.movement += 2
+            self.stealth += 1
 
     # Create a patch of trees in a 3x3 grid
-    def overgrowth(self, target):
+    def overgrowth(self, map, target):
         self.energy -= 5
-
-        target.type = 1
+        # Get 3x3 of tiles around target tile
+        tiles = grab_square(map, target, 1)
+        for val in tiles:
+            # Transform to trees
+            if (val.type <= 1):
+                val.type = 1
 
 # Sprinter
 # Agile Thief able to outrun enemies

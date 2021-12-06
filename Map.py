@@ -27,15 +27,18 @@ class Map:
         print("\n")
         if isinstance(args[0], str):
             rows = []
-            with open("MapFiles/" + args[0] + ".csv", 'r') as file:
-                csvreader = csv.reader(file)
-                for y in range(10):
-                    line = next(csvreader)
-                    for x in range(10):
-                        self.tile_list.append(Tile((y * 10 + x ), int(line[x])))
+            try:
+                with open("MapFiles/" + args[0] + ".csv", 'r') as file:
+                    csvreader = csv.reader(file)
+                    for y in range(10):
+                        line = next(csvreader)
+                        for x in range(10):
+                            self.tile_list.append(Tile((y * 10 + x ), int(line[x])))
 
-            # Names the map
-            self.name = args[0]
+                # Names the map
+                self.name = args[0]
+            except:
+                print("Invalid file - Cannot load map")
 
         # If non-string argument, randomly generates a map instead
         else:
