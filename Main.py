@@ -54,4 +54,4 @@ map.print_map()
 move_prompt()
 map.print_map()
 
-current_char.get_vision(map)
+current_char.update_vision(map)
