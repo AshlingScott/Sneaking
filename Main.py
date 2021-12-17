@@ -6,6 +6,7 @@ from ThiefClasses import *
 from GuardClasses import *
 from Item import *
 from Alter import *
+from Summons import *
 
 # Various tests
 def test():
@@ -44,10 +45,11 @@ def move_prompt():
         if failed:
             move_prompt()
 
-# Main execution
 current_char = char_select()
 print("\n")
 current_char.print_stats()
+
+test_summon = Wolf(5, 2, 6, 3, 0, True, current_char)
 
 map = Map("Horseshoe")
 map.print_map()
