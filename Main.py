@@ -47,9 +47,16 @@ def move_prompt():
 
 current_char = char_select()
 print("\n")
-current_char.print_stats()
 
 test_summon = Wolf(5, 2, 6, 3, 0, True, current_char)
+current_char.print_stats()
+
+test_alter = Speed(True, 0, True, current_char, 2)
+current_char.alters.append(test_alter)
+current_char.upkeep()
+
+print("\nUpkeep runs\n")
+current_char.print_stats()
 
 map = Map("Horseshoe")
 map.print_map()

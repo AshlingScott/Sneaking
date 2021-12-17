@@ -1,6 +1,7 @@
 # Unit - Abstract
 # Class representing Units that move on the maps
 # Units can be Thief or Guard, which are opposing types
+
 from abc import *
 from Map import *
 
@@ -22,7 +23,7 @@ class Unit(ABC):
     # List of items held
     items = []
     # List of all alters affecting the character
-    alter = []
+    alters = []
     # List of all summons controlled by character
     summons = []
 
@@ -52,17 +53,28 @@ class Unit(ABC):
     def kill(self):
         pass
 
-    # Each turn, move through lists updating durations and per-turn effects
+    # Each turn, move through lists.  Apply alters,
+    # updating durations and per-turn effects
     def upkeep(self):
-        # Increment energy by energy_gain
-        self.energy += self.energy_gain
+
+        print(self.alters)
         # Loop through lists to tick down durations
-        for x in range(len(self.alter)):
-            if (self.alter[x].tick_down() == 0):
-                self.alter.pop(x)
+        for x in range(len(self.alters)):
+            if (self.alters[x].tick_down() == 0):
+                self.alters.pop(x)
         for x in range(len(self.summons)):
             if (self.summons[x].tick_down() == 0):
                 self.summons.pop(x)
+
+        print(self.alters)
+
+        # Apply Alters
+        for alter in self.alters:
+            print("applying")
+            alter.apply()
+
+        # Increment energy by energy_gain
+        self.energy += self.energy_gain
 
     # Print out a list of items character is holding
     def print_items(self):
