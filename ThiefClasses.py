@@ -5,9 +5,18 @@ from Unit import *
 # Druid
 # Flexible Thief that can change their form to suit their purpose
 class Druid(Thief):
-    # Form represents which form the Druid is in
-    # 0 = human, 1 = hawk, 2 = squirrel
-    form = 0
+    # Druids base stats are:
+    # 4 Movement
+    # 5 Vision
+    # 3 Energy Gain
+    def __init__(self, location):
+        self.location = location
+        self.movement = 4
+        self.vision = 5
+        self.energy_gain = 3
+        # Form represents what the druid is shapeshifted into
+        # 0 is Human (default), 1 is hawk, 2 is squirrel
+        self.form = 0
 
     # Represented on the map with D
     def get_symbol(self):
@@ -75,6 +84,16 @@ class Druid(Thief):
 # Sprinter
 # Agile Thief able to outrun enemies
 class Sprinter(Thief):
+    # Sprinters base stats are:
+    # 6 Movement
+    # 4 Vision
+    # 2 Energy Gain
+    def __init__(self, location):
+        self.location = location
+        self.movement = 6
+        self.vision = 4
+        self.energy_gain = 2
+
     # Represented on the map with S
     def get_symbol(self):
         return "S"
@@ -118,6 +137,18 @@ class Sprinter(Thief):
 # Shadow
 # Slippery Thief that hides in the darkness
 class Shadow(Thief):
+    # Shadows base stats are:
+    # 3 Movement
+    # 5 Vision
+    # 3 Energy Gain
+    def __init__(self, location):
+        self.location = location
+        self.movement = 3
+        self.vision = 5
+        self.energy_gain = 3
+        # Shadows have a default stealth level of 1 instead of 0
+        self.stealth = 1
+
     # Represented on the map with H
     def get_symbol(self):
         return "H"

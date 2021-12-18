@@ -16,7 +16,7 @@ def test():
 def char_select():
     char = input("Choose your Character - Druid, Shadow, Golem, Techie\n")
     if (char == "Druid"):
-        return Druid(2, 3, 2, 1)
+        return Druid(2)
     elif (char == "Shadow"):
         return Shadow(6, 6, 4, 9)
     elif (char == "Golem"):
@@ -48,7 +48,7 @@ def move_prompt():
 current_char = char_select()
 print("\n")
 
-test_summon = Wolf(5, 2, 6, 3, 0, True, current_char)
+test_summon = Wolf(3, current_char)
 current_char.print_stats()
 
 test_alter = Speed(True, 0, True, current_char, 2)

@@ -6,6 +6,16 @@ from Unit import *
 # Guard that tracks down enemies through the forest
 # Capable of walking through forest, unlike other Guards
 class Blood_hunter(Guard):
+    # Blood Hunter base stats are:
+    # 6 Movement
+    # 2 Vision
+    # 3 Energy Gain
+    def __init__(self, location):
+        self.location = location
+        self.movement = 6
+        self.vision = 2
+        self.energy_gain = 3
+
     # Represented on the map by B
     def get_symbol(self):
         return "B"
@@ -64,7 +74,19 @@ class Blood_hunter(Guard):
 
 # Golem
 # Beefy Guard thats resilient and strong
+# TODO: Implement immunity to disables.  This might require an abstract
+# Disable method in Unit (also works for temporary immunity alters)
 class Golem(Guard):
+    # Golem base stats are:
+    # 3 Movement
+    # 5 Vision
+    # 2 Energy Gain
+    def __init__(self, location):
+        self.location = location
+        self.movement = 3
+        self.vision = 5
+        self.energy_gain = 2
+
     # Represented on the map by G
     def get_symbol(self):
         return "G"
@@ -117,6 +139,16 @@ class Golem(Guard):
 # Techie
 # Trap-laying Guard with unique utility
 class Techie(Guard):
+    # Techie base stats are:
+    # 3 Movement
+    # 5 Vision
+    # 3 Energy Gain
+    def __init__(self, location):
+        self.location = location
+        self.movement = 3
+        self.vision = 5
+        self.energy_gain = 3
+
     # Represented on the map by T
     def get_symbol(self):
         return "T"
@@ -135,7 +167,7 @@ class Techie(Guard):
             self.energy -= 5
             #TODO: Create summon on this tiles
         else:
-            pass
+            print("Can't place trap here")
 
     # Scan a target area, giving temporary Vision in 5x5 grid
     def scan(self, map, target):
