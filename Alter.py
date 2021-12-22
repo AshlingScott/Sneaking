@@ -4,12 +4,16 @@
 from abc import *
 
 class Alter(ABC):
-    def __init__(self, permanent, duration, positive, own, mag):
+    # Positive is whether the alter is beneficial or harmful
+    # Magnitude is an integer value associated with the alter strength
+    # Source is the source of the alter, usually either a Unit or Item
+    def __init__(self, permanent, duration, positive, own, mag, source):
         self.permanent = permanent
         self.duration = duration
         self.positive = positive
         self.owner = own
         self.magnitude = mag
+        self.source = source
 
     # Apply applies effects to a character during the upkeep step
     @abstractmethod
@@ -36,8 +40,14 @@ class Vision(Alter):
     def apply(self):
         self.owner.vision += self.magnitude
 
+# Max Energy alter, found on Power Well
 class Energy(Alter):
 
-    # Applies the effect to the owning unit
+    def apply(self):
+        self.owner.energy += self.magnitude
+
+# Energy gain alter, found on Energy Charm
+class Energy_Gain(Alter):
+
     def apply(self):
         self.owner.energy_gain += self.magnitude

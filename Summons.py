@@ -69,6 +69,36 @@ class Wolf(Summon):
         return "W"
 
     def print_stats(self):
-        print("Druid" + "\nMovement: " + str(self.movement) + "\nVision: "
+        print("Wolf" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
         + str(self.energy_gain) + "\nDuration Remaining: " + str(self.duration))
+
+#  Stasis traps are permanent summons that wait for a thief to walk over them
+#  and destroy themselves to disable the triggerer
+class Stasis(Summon):
+    permanent = True
+
+    # Stasis has no movement and no vision
+    def __init__(self, location, own):
+        self.location = location
+        self.owner = own
+
+        self.movement = 0
+        self.vision = 0
+        self.energy_gain = 0
+        self.duration = 0
+
+    # Represented on the map with @
+    def get_symbol(self):
+        return "@"
+
+    def print_stats(self):
+        print("Stasis Trap" + "\nMovement: " + str(self.movement) + "\nVision: "
+        + str(self.vision) + "\nPermanent Duration")
+
+    # Detonates the trap when a Thief steps on it, disabling the thief
+    def detonate(self, thief, owner, map):
+        thief.disabled = True
+        #TODO: Implement logic for stepping on mines
+        # Probably part of the move function (When checking for collision,
+        # if its a mine let them walk there and detonate)

@@ -16,13 +16,13 @@ def test():
 def char_select():
     char = input("Choose your Character - Druid, Shadow, Golem, Techie\n")
     if (char == "Druid"):
-        return Druid(2)
+        return Druid(52)
     elif (char == "Shadow"):
-        return Shadow(6, 6, 4, 9)
+        return Shadow(52)
     elif (char == "Golem"):
-        return Golem(3, 4, 5, 6)
+        return Golem(52)
     elif (char == "Techie"):
-        return Techie(6, 4, 8, 2)
+        return Techie(52)
     else:
         # If invalid input, re-enter char_select
         print("Not a valid character")
