@@ -8,10 +8,6 @@ from Item import *
 from Alter import *
 from Summons import *
 
-# Various tests
-def test():
-    pass
-
 # Prompt to choose a character
 def char_select():
     char = input("Choose your Character - Druid, Shadow, Golem, Techie\n")
@@ -45,13 +41,28 @@ def move_prompt():
         if failed:
             move_prompt()
 
+# Prompt to choose an item to aquire and equip
+def item_prompt():
+    choice = input("Choose an item:\n1 - Boots of speed\n2 - Spyglass\
+        3 - Tri Charm Amulet")
+    if (choice == "1"):
+        current_char.add_item(Boots(current_char))
+    elif (choice == "2"):
+        current_char.add_item(Spyglass(current_char))
+    elif (choice == "3"):
+        current_char.add_item(Tri_Charm_Amulet(current_char))
+    else:
+        print("Not a valid choice, choose 1 to 3")
+        item_prompt()
+
+# TESTING
 current_char = char_select()
 print("\n")
 
 test_summon = Wolf(3, current_char)
 current_char.print_stats()
 
-test_alter = Speed(True, 0, True, current_char, 2)
+test_alter = Speed(True, 0, True, current_char, 2, "testing")
 current_char.alters.append(test_alter)
 current_char.upkeep()
 
@@ -64,3 +75,7 @@ move_prompt()
 map.print_map()
 
 current_char.update_vision(map)
+
+item_prompt()
+current_char.upkeep()
+current_char.print_stats()

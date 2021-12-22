@@ -64,15 +64,24 @@ class Unit(ABC):
             if (self.summons[x].tick_down() == 0):
                 self.summons.pop(x)
 
-        print(self.alters)
-
         # Apply Alters
         for alter in self.alters:
-            print("applying")
             alter.apply()
 
         # Increment energy by energy_gain
         self.energy += self.energy_gain
+
+    # Apply effects that expire at end of a turn
+    def endturn(self):
+        # Remove disabled effect
+        self.disabled = False
+
+    # Equips an item to the Unit
+    def add_item(self, item):
+        # Add item to players item list
+        self.items.append(item)
+        # Add the items alters to the players alter list
+        self.alters += item.alters
 
     # Print out a list of items unit is holding
     def print_items(self):
