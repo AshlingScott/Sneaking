@@ -55,6 +55,32 @@ def item_prompt():
         print("Not a valid choice, choose 1 to 3")
         item_prompt()
 
+# Prompt to select an ability to use
+# Sends map along with the choice, as many abilities need the map to work
+def ability_prompt():
+    current_char.print_abilities()
+    choice = input("Choose an ability to perform, or hit x to cancel")
+    # If choice is x, return to options
+    # If ability is otherwise invalid, return invalid and re-enter function
+    if (choice == "x"):
+        select_option()
+    else:
+        if (current_char.ability_selection(map, choice) == "invalid"):
+            ability_prompt()
+
+# Choose which action to perform next
+def select_option():
+    choice = input("Choose an option:\n1 - Move\n2 - Get Item\n3 - Use ability\n")
+    if (choice == "1"):
+        move_prompt()
+    elif (choice == "2"):
+        item_prompt()
+    elif (choice == "3"):
+        ability_prompt()
+    else:
+        print("Not a valid choice, choose 1 to 3")
+        select_option()
+
 # TESTING
 current_char = char_select()
 print("\n")
@@ -70,6 +96,7 @@ print("\nUpkeep runs\n")
 current_char.print_stats()
 
 map = Map("Horseshoe")
+select_option()
 map.print_map()
 move_prompt()
 map.print_map()

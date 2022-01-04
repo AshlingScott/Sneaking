@@ -22,6 +22,7 @@ class Druid(Thief):
     def get_symbol(self):
         return "D"
 
+    # Prints out stats of unit
     def print_stats(self):
         if (self.form == 0):
             form = "Human"
@@ -31,11 +32,34 @@ class Druid(Thief):
             form = "Squirrel"
         print("Druid" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\nCurrent Form: " + form + "\nAbilities\n"
-        + "Entangle: Trap an enemy with roots\n"
-        + "Hawk Form: Turn into a hawk, gain flying and extra vision\n"
-        + "Squirrel Form: Turn into a squirrel, gain movement and stealth\n"
-        + "Overgrowth: Grow a patch of trees in an area\n")
+        + str(self.energy_gain) + "\nCurrent Form: " + form)
+        # Print abilities after attributes
+        self.print_abilities()
+
+    # Prints out a list of the units abilities
+    def print_abilities(self):
+        print("Abilities\n"
+        + "1 - Entangle: Trap an enemy with roots\n"
+        + "2 - Hawk Form: Turn into a hawk, gain flying and extra vision\n"
+        + "3 - Squirrel Form: Turn into a squirrel, gain movement and stealth\n"
+        + "4 - Overgrowth: Grow a patch of trees in an area\n")
+
+    # Takes input from player asking which ability to be used, executes
+    # appropriately in sub class
+    def ability_selection(self, map, choice):
+        if (choice == "1"):
+            # TODO: Implement choosing a target to Entangle
+            self.entangle(target)
+        elif (choice == "2"):
+            self.hawk_form()
+        elif (choice == "3"):
+            self.squirrel_form()
+        elif (choice == "4"):
+            #TODO: Implement choosing a target tile
+            self.overgrowth(map, target)
+        else:
+            print("Invalid selection")
+            return "invalid"
 
     # Wraps the target in roots, disabling for 1 turn
     def entangle(self, target):
