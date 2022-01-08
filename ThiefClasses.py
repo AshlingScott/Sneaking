@@ -48,15 +48,15 @@ class Druid(Thief):
     # appropriately in sub class
     def ability_selection(self, map, choice):
         if (choice == "1"):
-            # TODO: Implement choosing a target to Entangle
+            # TODO: Implement targetting system
             self.entangle(target)
         elif (choice == "2"):
             self.hawk_form()
         elif (choice == "3"):
             self.squirrel_form()
         elif (choice == "4"):
-            #TODO: Implement choosing a target tile
-            self.overgrowth(map, target)
+            #TODO: Implement targeting system
+            self.overgrowth()
         else:
             print("Invalid selection")
             return "invalid"
@@ -130,6 +130,21 @@ class Sprinter(Thief):
         + "Throw: Throw an item or a treasure to another Thief\n"
         + "Vault: Leap to target tile, can jump onto walls (can walk off later)")
 
+    # Takes input from player asking which ability to be used, executes
+    # appropriately in sub class
+    def ability_selection(self, map, choice):
+        if (choice == "1"):
+            self.sprint()
+        elif (choice == "2"):
+            # TODO: Implement targetting system
+            self.throw(target)
+        elif (choice == "3"):
+            # TODO: Implement targetting system
+            self.vault(target)
+        else:
+            print("Invalid selection")
+            return "invalid"
+
     # Run very fast for one round
     def sprint(self):
         self.energy -= 3
@@ -184,6 +199,21 @@ class Shadow(Thief):
         + "Shadow Dance: Gain increased stealth for 2 turns\n"
         + "Dark Warp: Teleport to target tile\n"
         + "Blind: Reduce the vision of a Guard by 2 for 2 turns")
+
+    # Takes input from player asking which ability to be used, executes
+    # appropriately in sub class
+    def ability_selection(self, map, choice):
+        if (choice == "1"):
+            self.shadow_dance()
+        elif (choice == "2"):
+            # TODO: Implement targetting system
+            self.dark_warp(target)
+        elif (choice == "3"):
+            # TODO: Implement targetting system
+            self.blind(map, target)
+        else:
+            print("Invalid selection")
+            return "invalid"
 
     # Becomes covered in shadows, gaining increased stealth
     def shadow_dance(self):

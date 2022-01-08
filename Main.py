@@ -25,84 +25,97 @@ def char_select():
         char_select()
 
 # Prompt to choose a tile to move to
-def move_prompt():
+def move_prompt(current_unit):
     try:
         # Tries if a valid int is input
         choice = int(input("Move to tile - Input tile id (0 to 99)"))
         # Try to make move, return failed if terrain blocks movement
-        failed = current_char.move(map, choice)
+        failed = current_unit.move(map, choice)
     except:
         # Give error message and recurse move
         print("Invalid - Input a number 0 to 99")
-        move_prompt()
+        move_prompt(current_unit)
         return
     if isinstance(choice, int):
         # If move was a failure, recurse move
         if failed:
-            move_prompt()
+            move_prompt(current_unit)
 
 # Prompt to choose an item to aquire and equip
-def item_prompt():
+def item_prompt(current_unit):
     choice = input("Choose an item:\n1 - Boots of speed\n2 - Spyglass\
         3 - Tri Charm Amulet")
     if (choice == "1"):
-        current_char.add_item(Boots(current_char))
+        current_unit.add_item(Boots(current_unit))
     elif (choice == "2"):
-        current_char.add_item(Spyglass(current_char))
+        current_unit.add_item(Spyglass(current_unit))
     elif (choice == "3"):
-        current_char.add_item(Tri_Charm_Amulet(current_char))
+        current_unit.add_item(Tri_Charm_Amulet(current_unit))
     else:
         print("Not a valid choice, choose 1 to 3")
-        item_prompt()
+        item_prompt(current_unit)
 
 # Prompt to select an ability to use
 # Sends map along with the choice, as many abilities need the map to work
-def ability_prompt():
-    current_char.print_abilities()
+def ability_prompt(current_unit):
+    current_unit.print_abilities()
     choice = input("Choose an ability to perform, or hit x to cancel")
     # If choice is x, return to options
     # If ability is otherwise invalid, return invalid and re-enter function
     if (choice == "x"):
-        select_option()
+        select_option(current_unit)
     else:
-        if (current_char.ability_selection(map, choice) == "invalid"):
-            ability_prompt()
+        if (current_unit.ability_selection(map, choice) == "invalid"):
+            ability_prompt(current_unit)
 
 # Choose which action to perform next
-def select_option():
+def select_option(current_unit):
+    map.print_map()
     choice = input("Choose an option:\n1 - Move\n2 - Get Item\n3 - Use ability\n")
     if (choice == "1"):
-        move_prompt()
+        move_prompt(current_unit)
     elif (choice == "2"):
-        item_prompt()
+        item_prompt(current_unit)
     elif (choice == "3"):
-        ability_prompt()
+        ability_prompt(current_unit)
     else:
         print("Not a valid choice, choose 1 to 3")
-        select_option()
+        select_option(current_unit)
+
+# A turn involves running upkeep on the current unit, then letting them choose
+# an action to take.  They are sent to the back of the queue afterwards
+def turn():
+    current_unit = unit_list[0]
+    current_unit.upkeep()
+    select_option(current_unit)
+
+    # Move unit to the back of the queue
+    unit_list.pop(0)
+    unit_list.append(current_unit)
 
 # TESTING
-current_char = char_select()
+chosen = char_select()
 print("\n")
 
-test_summon = Wolf(3, current_char)
-current_char.print_stats()
+test_summon = Wolf(3, chosen)
+chosen.print_stats()
 
-test_alter = Speed(True, 0, True, current_char, 2, "testing")
-current_char.alters.append(test_alter)
-current_char.upkeep()
+test_alter = Speed(True, 0, True, chosen, 2, "testing")
+chosen.alters.append(test_alter)
+chosen.upkeep()
 
 print("\nUpkeep runs\n")
-current_char.print_stats()
+chosen.print_stats()
 
 map = Map("Horseshoe")
-select_option()
-map.print_map()
-move_prompt()
-map.print_map()
 
-current_char.update_vision(map)
+chosen.update_vision(map)
 
-item_prompt()
-current_char.upkeep()
-current_char.print_stats()
+chosen.upkeep()
+chosen.print_stats()
+
+# Unit list is a queue that shows the order of turns coming up
+unit_list = []
+unit_list.append(chosen)
+
+turn()

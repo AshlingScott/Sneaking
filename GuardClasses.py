@@ -28,6 +28,21 @@ class Blood_hunter(Guard):
         + "Blood Scent: Sniff out nearby enemies\n"
         + "Blood Rite: Destroy Thieves in a 3x3 grid")
 
+    # Takes input from player asking which ability to be used, executes
+    # appropriately in sub class
+    def ability_selection(self, map, choice):
+        if (choice == "1"):
+            self.track()
+        elif (choice == "2"):
+            # TODO: Implement targetting system
+            self.blood_scent(map)
+        elif (choice == "3"):
+            # TODO: Implement targetting system
+            self.blood_rite(map, target)
+        else:
+            print("Invalid selection")
+            return "invalid"
+
     # Blood Hunter can move through forest tiles, like a Thief
     # They still cannot see through them
     def move(self, map, new_location):
@@ -99,6 +114,21 @@ class Golem(Guard):
         + "Smash: Destroy nearby wall, making it a field\n"
         + "Armor Up: Block the next disabling effect for 3 turns")
 
+    # Takes input from player asking which ability to be used, executes
+    # appropriately in sub class
+    def ability_selection(self, map, choice):
+        if (choice == "1"):
+            # TODO: Implement targetting system
+            self.charge(map, target)
+        elif (choice == "2"):
+            # TODO: Implement targetting system
+            self.smash(map, target)
+        elif (choice == "3"):
+            self.armor_up()
+        else:
+            print("Invalid selection")
+            return "invalid"
+
     # Charges toward a target, disabling them
     def charge(self, map, target):
         failed = move(map, target)
@@ -159,10 +189,26 @@ class Techie(Guard):
         + str(self.energy_gain) + "\nAbilities\n"
         + "Statis Trap: Drop a stasis trap, disabling thieves that come close\n"
         + "Scan: Reveal an area of the map for 1 turn\n"
-        + "Hack: Reduce energy gain of all thieves for 2 turns")
+        + "Hack: Reduce energy gain of all thieves for 2 turns")\
+
+    # Takes input from player asking which ability to be used, executes
+    # appropriately in sub class
+    def ability_selection(self, map, choice):
+        if (choice == "1"):
+            # TODO: Implement targetting system
+            self.stasis_trap(map, target)
+        elif (choice == "2"):
+            # TODO: Implement targetting system
+            self.scan(map, target)
+        elif (choice == "3"):
+            # TODO: Needs to pass thieves list?  Kind of weird
+            self.hack()
+        else:
+            print("Invalid selection")
+            return "invalid"
 
     # Drop a stasis trap on a field tile, disables thieves who step within 1 range
-    def stasis_trap(self, target):
+    def stasis_trap(self, map, target):
         if (target.type == 0):
             self.energy -= 5
             #TODO: Create summon on this tiles
