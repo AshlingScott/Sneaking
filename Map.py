@@ -12,7 +12,7 @@ class Tile:
     # ID is the id of the tile in the maps tile_list
     # Type is which type of tile it is.  0 is grass, 1 is forest, 2 is rock
     # Occupant is a unit standing on the tile
-    def __init__(self, id, type):
+    def __init__(self, id: int, type: int):
         self.id = id
         self.type = type
         self.occupant = None
@@ -77,7 +77,7 @@ class Map:
 
     # Return a set of tiles in a square, within a range of target tile
     # Used on vision ranges, potential movements, ability targetting
-    def grab_square(self, map, target, _range_):
+    def grab_square(self, map, target: Tile, _range_: int) -> list:
         tileset = []
         # Sets the squares borders
         for x in range(-_range_, _range_ + 1):

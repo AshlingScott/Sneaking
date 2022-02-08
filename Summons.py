@@ -6,11 +6,11 @@ from Unit import *
 class Summon(Unit):
     # Kills the Summon
     # Not sure if required to implement at the moment
-    def kill(self, map):
+    def kill(self, map: Map):
         pass
 
     # Moves to target tile, by default Summons can only move on 0 tiles
-    def move(self, map, new_location):
+    def move(self, map: Map, new_location: int):
         if (map.tile_list[new_location].type == 0):
             # Remove from previous location
             map.tile_list[self.location].occupant = None
@@ -31,7 +31,7 @@ class Summon(Unit):
             return True
 
     # Gets visible tiles of the Summon.  Summons by default can only see 0
-    def get_vision(self, map):
+    def get_vision(self, map: Map) -> set:
         vision_tiles = set()
         # Grab a square based on Units vision
         grab_vision = map.grab_square(map, map.tile_list[self.location], self.vision)
@@ -43,7 +43,7 @@ class Summon(Unit):
         return vision_tiles
 
     # Ticks down the duration of temporary summons, returns duration
-    def tick_down(self):
+    def tick_down(self) -> int:
         if (self.permanent == False):
             self.duration -= 1
         return duration
@@ -55,7 +55,7 @@ class Wolf(Summon):
 
     # Wolves have 6 movement, 4 vision, and no energy or energy gain
     # Duration of 3 turns
-    def __init__(self, location, own):
+    def __init__(self, location: int, own: Unit):
         self.location = location
         self.owner = own
 
@@ -65,7 +65,7 @@ class Wolf(Summon):
         self.duration = 3
 
     # Represented on the map with W
-    def get_symbol(self):
+    def get_symbol(self) -> str:
         return "W"
 
     def print_stats(self):
@@ -79,7 +79,7 @@ class Stasis(Summon):
     permanent = True
 
     # Stasis has no movement and no vision
-    def __init__(self, location, own):
+    def __init__(self, location: int, own: Unit):
         self.location = location
         self.owner = own
 
@@ -89,7 +89,7 @@ class Stasis(Summon):
         self.duration = 0
 
     # Represented on the map with @
-    def get_symbol(self):
+    def get_symbol(self) -> str:
         return "@"
 
     def print_stats(self):
@@ -97,7 +97,7 @@ class Stasis(Summon):
         + str(self.vision) + "\nPermanent Duration")
 
     # Detonates the trap when a Thief steps on it, disabling the thief
-    def detonate(self, thief, owner, map):
+    def detonate(self, thief: Thief, owner: Unit, map: Map):
         thief.disabled = True
         #TODO: Implement logic for stepping on mines
         # Probably part of the move function (When checking for collision,

@@ -9,7 +9,7 @@ from Alter import *
 from Summons import *
 
 # Prompt to choose a character
-def char_select():
+def char_select() -> None:
     char = input("Choose your Character - Druid, Shadow, Golem, Techie\n")
     if (char == "Druid"):
         return Druid(52)
@@ -25,7 +25,7 @@ def char_select():
         char_select()
 
 # Prompt to choose a tile to move to
-def move_prompt(current_unit):
+def move_prompt(current_unit: Unit) -> None:
     try:
         # Tries if a valid int is input
         choice = int(input("Move to tile - Input tile id (0 to 99)"))
@@ -42,7 +42,7 @@ def move_prompt(current_unit):
             move_prompt(current_unit)
 
 # Prompt to choose an item to aquire and equip
-def item_prompt(current_unit):
+def item_prompt(current_unit: Unit) -> None:
     choice = input("Choose an item:\n1 - Boots of speed\n2 - Spyglass\
         3 - Tri Charm Amulet")
     if (choice == "1"):
@@ -57,7 +57,7 @@ def item_prompt(current_unit):
 
 # Prompt to select an ability to use
 # Sends map along with the choice, as many abilities need the map to work
-def ability_prompt(current_unit):
+def ability_prompt(current_unit: Unit) -> None:
     current_unit.print_abilities()
     choice = input("Choose an ability to perform, or hit x to cancel")
     # If choice is x, return to options
@@ -69,7 +69,7 @@ def ability_prompt(current_unit):
             ability_prompt(current_unit)
 
 # Choose which action to perform next
-def select_option(current_unit):
+def select_option(current_unit: Unit) -> None:
     map.print_map()
     choice = input("Choose an option:\n1 - Move\n2 - Get Item\n3 - Use ability\n")
     if (choice == "1"):
@@ -84,7 +84,7 @@ def select_option(current_unit):
 
 # A turn involves running upkeep on the current unit, then letting them choose
 # an action to take.  They are sent to the back of the queue afterwards
-def turn():
+def turn() -> None:
     current_unit = unit_list[0]
     current_unit.upkeep()
     select_option(current_unit)

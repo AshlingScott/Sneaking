@@ -2,12 +2,14 @@
 # be either permanent or temporary, and be either positive or negative
 
 from abc import *
+from Unit import *
 
 class Alter(ABC):
     # Positive is whether the alter is beneficial or harmful
     # Magnitude is an integer value associated with the alter strength
     # Source is the source of the alter, usually either a Unit or Item
-    def __init__(self, permanent, duration, positive, own, mag, source):
+    def __init__(self, permanent: bool, duration: int, positive: bool,
+            own: Unit, mag: int, source):
         self.permanent = permanent
         self.duration = duration
         self.positive = positive
@@ -21,7 +23,7 @@ class Alter(ABC):
         pass
 
     # Ticks down the duration of each alter, returns duration
-    def tick_down(self):
+    def tick_down(self) -> int:
         if (self.permanent == False):
             self.duration -= 1
         else:

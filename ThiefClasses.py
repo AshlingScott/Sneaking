@@ -9,7 +9,7 @@ class Druid(Thief):
     # 4 Movement
     # 5 Vision
     # 3 Energy Gain
-    def __init__(self, location):
+    def __init__(self, location: int):
         self.location = location
         self.movement = 4
         self.vision = 5
@@ -19,7 +19,7 @@ class Druid(Thief):
         self.form = 0
 
     # Represented on the map with D
-    def get_symbol(self):
+    def get_symbol(self) -> str:
         return "D"
 
     # Prints out stats of unit
@@ -46,7 +46,7 @@ class Druid(Thief):
 
     # Takes input from player asking which ability to be used, executes
     # appropriately in sub class
-    def ability_selection(self, map, choice):
+    def ability_selection(self, map: Map, choice: int):
         if (choice == "1"):
             # TODO: Implement targetting system
             self.entangle(target)
@@ -62,7 +62,7 @@ class Druid(Thief):
             return "invalid"
 
     # Wraps the target in roots, disabling for 1 turn
-    def entangle(self, target):
+    def entangle(self, target: Tile):
         self.energy -= 3
         target.disabled = True
         # TODO: Make it an alter with duration
@@ -96,7 +96,7 @@ class Druid(Thief):
             self.stealth += 1
 
     # Create a patch of trees in a 3x3 grid
-    def overgrowth(self, map, target):
+    def overgrowth(self, map: Map, target: Tile):
         self.energy -= 5
         # Get 3x3 of tiles around target tile
         tiles = grab_square(map, target, 1)
@@ -112,14 +112,14 @@ class Sprinter(Thief):
     # 6 Movement
     # 4 Vision
     # 2 Energy Gain
-    def __init__(self, location):
+    def __init__(self, location: int):
         self.location = location
         self.movement = 6
         self.vision = 4
         self.energy_gain = 2
 
     # Represented on the map with S
-    def get_symbol(self):
+    def get_symbol(self) -> str:
         return "S"
 
     def print_stats(self):
@@ -132,7 +132,7 @@ class Sprinter(Thief):
 
     # Takes input from player asking which ability to be used, executes
     # appropriately in sub class
-    def ability_selection(self, map, choice):
+    def ability_selection(self, map: Map, choice: int):
         if (choice == "1"):
             self.sprint()
         elif (choice == "2"):
@@ -152,7 +152,7 @@ class Sprinter(Thief):
         # TODO: Make it an alter with duration
 
     # Throws an item to another Thief
-    def throw(self, target):
+    def throw(self, target: Thief):
         if self.has_treasure:
             self.energy -= 3
             self.has_treasure = False
@@ -163,7 +163,7 @@ class Sprinter(Thief):
 
     # Leaps to a tile, can target walls (you can walk off of walls as normal)
     # Range of 2
-    def vault(self, map, target):
+    def vault(self, map: Map, target: Tile):
         # Get list of tiles within range of 2
         viable_tiles = map.grab_square(map, map.tile_list[self.location], 2)
         # Check if target tile is within that list
@@ -180,7 +180,7 @@ class Shadow(Thief):
     # 3 Movement
     # 5 Vision
     # 3 Energy Gain
-    def __init__(self, location):
+    def __init__(self, location: int):
         self.location = location
         self.movement = 3
         self.vision = 5
@@ -189,7 +189,7 @@ class Shadow(Thief):
         self.stealth = 1
 
     # Represented on the map with H
-    def get_symbol(self):
+    def get_symbol(self) -> str:
         return "H"
 
     def print_stats(self):
@@ -202,7 +202,7 @@ class Shadow(Thief):
 
     # Takes input from player asking which ability to be used, executes
     # appropriately in sub class
-    def ability_selection(self, map, choice):
+    def ability_selection(self, map: Map, choice: int):
         if (choice == "1"):
             self.shadow_dance()
         elif (choice == "2"):
@@ -222,12 +222,12 @@ class Shadow(Thief):
         # TODO: Make it an alter with duration
 
     # Warps to target location
-    def dark_warp(self, target):
+    def dark_warp(self, target: Tile):
         self.energy -= 4
         self.location = target
 
     # Covers a guard in shadows, reducing their vision range
-    def blind(self, map, target):
+    def blind(self, map, target: Guard):
         self.energy -= 4
         target.vision -= 2
         # Immediately updates visiion of target guard

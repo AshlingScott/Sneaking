@@ -10,14 +10,14 @@ class Blood_hunter(Guard):
     # 6 Movement
     # 2 Vision
     # 3 Energy Gain
-    def __init__(self, location):
+    def __init__(self, location: int):
         self.location = location
         self.movement = 6
         self.vision = 2
         self.energy_gain = 3
 
     # Represented on the map by B
-    def get_symbol(self):
+    def get_symbol(self) -> str:
         return "B"
 
     def print_stats(self):
@@ -30,7 +30,7 @@ class Blood_hunter(Guard):
 
     # Takes input from player asking which ability to be used, executes
     # appropriately in sub class
-    def ability_selection(self, map, choice):
+    def ability_selection(self, map: Map, choice: int):
         if (choice == "1"):
             self.track()
         elif (choice == "2"):
@@ -45,7 +45,7 @@ class Blood_hunter(Guard):
 
     # Blood Hunter can move through forest tiles, like a Thief
     # They still cannot see through them
-    def move(self, map, new_location):
+    def move(self, map: Map, new_location: int):
         if (map.tile_list[new_location].type <= 1):
             # Remove from previous location
             map.tile_list[self.location].occupant = None
@@ -62,12 +62,12 @@ class Blood_hunter(Guard):
             return True
 
     # Indicate tiles that Thieves have been on in the last 2 turns
-    def track(self, map):
+    def track(self, map: Map):
         self.energy -= 3
         # TODO: Implement this, requires remembering unit locations
 
     # Smell enemies within range 3 and reveal them
-    def blood_scent(self, map):
+    def blood_scent(self, map: Map):
         self.energy -= 3
         # get range 3 square
         smell_zone = grab_square(map, map.tile_list[self.location], 3)
@@ -78,7 +78,7 @@ class Blood_hunter(Guard):
                     tile.occupant.visible = True
 
     # Area targetted effect slaying all thieves in a 3x3 grid
-    def blood_rite(self, map, target):
+    def blood_rite(self, map: Map, target: Tile):
         self.energy -= 5
         # Get 3x3 zone around target tile
         kill_zone = grab_square(map, target, 1)
@@ -96,14 +96,14 @@ class Golem(Guard):
     # 3 Movement
     # 5 Vision
     # 2 Energy Gain
-    def __init__(self, location):
+    def __init__(self, location: int):
         self.location = location
         self.movement = 3
         self.vision = 5
         self.energy_gain = 2
 
     # Represented on the map by G
-    def get_symbol(self):
+    def get_symbol(self) -> str:
         return "G"
 
     def print_stats(self):
@@ -116,7 +116,7 @@ class Golem(Guard):
 
     # Takes input from player asking which ability to be used, executes
     # appropriately in sub class
-    def ability_selection(self, map, choice):
+    def ability_selection(self, map: Map, choice: int):
         if (choice == "1"):
             # TODO: Implement targetting system
             self.charge(map, target)
@@ -130,7 +130,7 @@ class Golem(Guard):
             return "invalid"
 
     # Charges toward a target, disabling them
-    def charge(self, map, target):
+    def charge(self, map: Map, target: Tile):
         failed = move(map, target)
         # If move failed, do nothing
         if failed:
@@ -148,7 +148,7 @@ class Golem(Guard):
             # TODO: Add disable as a duration alter
 
     # Smash a target wall, turning it into grass
-    def smash(self, map, target):
+    def smash(self, map: Map, target: Tile):
         if (target.type == 2):
             # Check melee range
             melee_zone = grab_square(map, map.tile_list[self.location], 1)
@@ -173,14 +173,14 @@ class Techie(Guard):
     # 3 Movement
     # 5 Vision
     # 3 Energy Gain
-    def __init__(self, location):
+    def __init__(self, location: int):
         self.location = location
         self.movement = 3
         self.vision = 5
         self.energy_gain = 3
 
     # Represented on the map by T
-    def get_symbol(self):
+    def get_symbol(self) -> str:
         return "T"
 
     def print_stats(self):
@@ -193,7 +193,7 @@ class Techie(Guard):
 
     # Takes input from player asking which ability to be used, executes
     # appropriately in sub class
-    def ability_selection(self, map, choice):
+    def ability_selection(self, map: Map, choice: int):
         if (choice == "1"):
             # TODO: Implement targetting system
             self.stasis_trap(map, target)
@@ -208,7 +208,7 @@ class Techie(Guard):
             return "invalid"
 
     # Drop a stasis trap on a field tile, disables thieves who step within 1 range
-    def stasis_trap(self, map, target):
+    def stasis_trap(self, map: Map, target: Tile):
         if (target.type == 0):
             self.energy -= 5
             #TODO: Create summon on this tiles
@@ -216,7 +216,7 @@ class Techie(Guard):
             print("Can't place trap here")
 
     # Scan a target area, giving temporary Vision in 5x5 grid
-    def scan(self, map, target):
+    def scan(self, map: Map, target: Tile):
         self.energy -= 4
         # Get 5x5 grid around target
         scan_zone = grab_square(map, target, 2)
@@ -224,6 +224,7 @@ class Techie(Guard):
         # Should visible tiles even be a set at this point?
 
     # Reduce vision of all enemies on the map_array
+    # TODO: Pass thief list for use here
     def hack(self, thief_list):
         self.energy -= 3
         for thief in thief_list:

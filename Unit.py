@@ -95,13 +95,13 @@ class Thief(Unit):
     alive = True
 
     # Kills the thief
-    def kill(self, map):
+    def kill(self, map: Map):
         alive = False
         map.tile_list[self.location].occupied = False
         map.tile_list[self.location].occupant = None
 
     # Moves to target tile, Thieves can move on 0 or 1 type tiles
-    def move(self, map, new_location):
+    def move(self, map: Map, new_location: int):
         if (map.tile_list[new_location].type <= 1):
             # Remove from previous location
             map.tile_list[self.location].occupant = None
@@ -118,7 +118,7 @@ class Thief(Unit):
             return True
 
     # Gets vision range of Unit, Thieves can see type 0 and 1 tiles
-    def update_vision(self, map):
+    def update_vision(self, map: Map):
         vision_tiles = set()
         # Grab a square based on Units vision
         grab_vision = map.grab_square(map, map.tile_list[self.location], self.vision)
@@ -142,7 +142,7 @@ class Guard(Unit):
         pass
 
     # Moves to target tile, Guards can only move on 0 tiles
-    def move(self, map, new_location):
+    def move(self, map: Map, new_location: int):
         if (map.tile_list[new_location].type == 0):
             # Remove from previous location
             map.tile_list[self.location].occupant = None
@@ -163,7 +163,7 @@ class Guard(Unit):
             return True
 
     # Gets visible tiles of Unit.  Guards can see type 0 tiles only
-    def get_vision(self, map):
+    def get_vision(self, map: Map) -> set:
         vision_tiles = set()
         # Grab a square based on Units vision
         grab_vision = map.grab_square(map, map.tile_list[self.location], self.vision)
