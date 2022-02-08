@@ -1,5 +1,2 @@
 # Sneaking
-# Ashling Scott
-#
-# Back end class implementation for theoretical stealth game
-# Made as practice
+Back-end of a turn based stealth game, made for fun and practice. Currently works as a rudimentary command line game.
