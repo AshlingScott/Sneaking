@@ -26,6 +26,10 @@ class Unit(ABC):
     alters = []
     # List of all summons controlled by character
     summons = []
+    # List of all talents allocated by characters
+    talents = []
+    # How many talent points are available
+    talent_points = 0
 
     # Static base stats are set based on the subclass selected
     # These stats include:
@@ -72,7 +76,7 @@ class Unit(ABC):
         self.energy += self.energy_gain
 
     # Apply effects that expire at end of a turn
-    def endturn(self):
+    def end_turn(self):
         # Remove disabled effect
         self.disabled = False
 

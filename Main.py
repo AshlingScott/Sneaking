@@ -7,6 +7,7 @@ from GuardClasses import *
 from Item import *
 from Alter import *
 from Summons import *
+from Talents import *
 
 # Prompt to choose a character
 def char_select() -> None:
