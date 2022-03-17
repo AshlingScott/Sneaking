@@ -95,6 +95,8 @@ def turn() -> None:
     unit_list.append(current_unit)
 
 # TESTING
+talent_tree = TalentTree()
+
 chosen = char_select()
 print("\n")
 

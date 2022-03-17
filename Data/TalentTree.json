@@ -1,0 +1,25 @@
+{
+    "talents":  [
+      {
+        "name": "Shadow Prowler",
+        "description": "Gain 1 additional level of stealth",
+        "active": false,
+        "tier": 1,
+        "effects": []
+      },
+      {
+        "name": "Dark Warp",
+        "description": "Teleport to a target tile",
+        "active": true,
+        "tier": 2,
+        "effects": []
+      },
+      {
+        "name": "Darkness",
+        "description": "Reduce vision of all enemies",
+        "active": true,
+        "tier": 3,
+        "effects": []
+      }
+    ]
+}

@@ -12,7 +12,7 @@ class Tile:
     # ID is the id of the tile in the maps tile_list
     # Type is which type of tile it is.  0 is grass, 1 is forest, 2 is rock
     # Occupant is a unit standing on the tile
-    def __init__(self, id: int, type: int, Occupant: Unit):
+    def __init__(self, id: int, type: int):
         self.id = id
         self.type = type
         self.occupant = None
