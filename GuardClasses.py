@@ -1,20 +1,18 @@
 # The different specific Guards that can be played
 
 from Unit import *
+from random import randrange
 
 # Blood Hunter
 # Guard that tracks down enemies through the forest
 # Capable of walking through forest, unlike other Guards
 class Blood_hunter(Guard):
-    # Blood Hunter base stats are:
-    # 6 Movement
-    # 2 Vision
-    # 3 Energy Gain
+
     def __init__(self, location: int):
         self.location = location
-        self.movement = 6
-        self.vision = 2
-        self.energy_gain = 3
+        self.movement = randrange(3,6)
+        self.vision = randrange(3,6)
+        self.energy_gain = randrange(3,6)
 
     # Represented on the map by B
     def get_symbol(self) -> str:
@@ -92,15 +90,12 @@ class Blood_hunter(Guard):
 # TODO: Implement immunity to disables.  This might require an abstract
 # Disable method in Unit (also works for temporary immunity alters)
 class Golem(Guard):
-    # Golem base stats are:
-    # 3 Movement
-    # 5 Vision
-    # 2 Energy Gain
+
     def __init__(self, location: int):
         self.location = location
-        self.movement = 3
-        self.vision = 5
-        self.energy_gain = 2
+        self.movement = randrange(3,6)
+        self.vision = randrange(3,6)
+        self.energy_gain = randrange(3,6)
 
     # Represented on the map by G
     def get_symbol(self) -> str:
@@ -169,15 +164,12 @@ class Golem(Guard):
 # Techie
 # Trap-laying Guard with unique utility
 class Techie(Guard):
-    # Techie base stats are:
-    # 3 Movement
-    # 5 Vision
-    # 3 Energy Gain
+
     def __init__(self, location: int):
         self.location = location
-        self.movement = 3
-        self.vision = 5
-        self.energy_gain = 3
+        self.movement = randrange(3,6)
+        self.vision = randrange(3,6)
+        self.energy_gain = randrange(3,6)
 
     # Represented on the map by T
     def get_symbol(self) -> str:

@@ -8,6 +8,7 @@ from Item import *
 from Alter import *
 from Summons import *
 from Talents import *
+from Roster import *
 
 # Prompt to choose a character
 def char_select() -> None:
@@ -95,10 +96,17 @@ def turn() -> None:
     unit_list.append(current_unit)
 
 # TESTING
+
+# Create talent tree
 talent_tree = TalentTree()
 
+# Create Roster
+roster = Roster()
+
+# Select character then add to Roster
 chosen = char_select()
 print("\n")
+roster.add_unit(chosen)
 
 test_summon = Wolf(3, chosen)
 chosen.print_stats()

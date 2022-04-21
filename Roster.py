@@ -10,5 +10,10 @@ class Roster:
     unit_list = []
 
     def __init__(self):
+        pass
 
-    def create_team(self, selected_units):
+    def add_unit(self, unit: Unit):
+        if (len(self.unit_list) < self.maximum):
+            self.unit_list.append(unit)
+        else:
+            print("Roster size is maximum already")

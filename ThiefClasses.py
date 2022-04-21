@@ -1,21 +1,19 @@
 # The different specific Thieves that can be played
 
 from Unit import *
+from random import randrange
 
 # Druid
 # Flexible Thief that can change their form to suit their purpose
 class Druid(Thief):
-    # Druids base stats are:
-    # 4 Movement
-    # 5 Vision
-    # 3 Energy Gain
+
     def __init__(self, location: int):
         self.location = location
-        self.movement = 4
-        self.vision = 5
-        self.energy_gain = 3
-        # Form represents what the druid is shapeshifted into
-        # 0 is Human (default), 1 is hawk, 2 is squirrel
+        self.movement = randrange(3,6)
+        self.vision = randrange(3,6)
+        self.energy_gain = randrange(3,6)
+
+        # Druids have forms represented by numbers
         self.form = 0
 
     # Represented on the map with D
@@ -108,15 +106,12 @@ class Druid(Thief):
 # Sprinter
 # Agile Thief able to outrun enemies
 class Sprinter(Thief):
-    # Sprinters base stats are:
-    # 6 Movement
-    # 4 Vision
-    # 2 Energy Gain
+
     def __init__(self, location: int):
         self.location = location
-        self.movement = 6
-        self.vision = 4
-        self.energy_gain = 2
+        self.movement = randrange(3,6)
+        self.vision = randrange(3,6)
+        self.energy_gain = randrange(3,6)
 
     # Represented on the map with S
     def get_symbol(self) -> str:
@@ -176,15 +171,13 @@ class Sprinter(Thief):
 # Shadow
 # Slippery Thief that hides in the darkness
 class Shadow(Thief):
-    # Shadows base stats are:
-    # 3 Movement
-    # 5 Vision
-    # 3 Energy Gain
+
     def __init__(self, location: int):
         self.location = location
-        self.movement = 3
-        self.vision = 5
-        self.energy_gain = 3
+        self.movement = randrange(3,6)
+        self.vision = randrange(3,6)
+        self.energy_gain = randrange(3,6)
+
         # Shadows have a default stealth level of 1 instead of 0
         self.stealth = 1
 
