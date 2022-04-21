@@ -90,6 +90,9 @@ class Blood_hunter(Guard):
 # TODO: Implement immunity to disables.  This might require an abstract
 # Disable method in Unit (also works for temporary immunity alters)
 class Golem(Guard):
+    # Block indicates whether a disable will be blocked.  0 means no block,
+    # 1 means that block is ready
+    block = 0
 
     def __init__(self, location: int):
         self.location = location
@@ -108,6 +111,14 @@ class Golem(Guard):
         + "Charge: Dash to target tile, and disable nearby thieves\n"
         + "Smash: Destroy nearby wall, making it a field\n"
         + "Armor Up: Block the next disabling effect for 3 turns")
+
+    # Overwrites the disable function to allow blocking to work
+    def disable(self):
+        if (self.block == 1):
+            print("Disable blocked by Golem's power armor")
+            self.block = 0
+        else:
+            self.disabled = True
 
     # Takes input from player asking which ability to be used, executes
     # appropriately in sub class
@@ -159,7 +170,8 @@ class Golem(Guard):
     # Block the next disabling effect, last 3 returns
     def armor_up(self):
         self.energy -= 3
-        # TODO: Add a duration alter for block effect
+        # Sets block to 1, enabling blocking of disable
+        block = 1
 
 # Techie
 # Trap-laying Guard with unique utility

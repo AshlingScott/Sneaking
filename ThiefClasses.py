@@ -6,15 +6,14 @@ from random import randrange
 # Druid
 # Flexible Thief that can change their form to suit their purpose
 class Druid(Thief):
+    # Druids have forms represented by numbers
+    form = 0
 
     def __init__(self, location: int):
         self.location = location
         self.movement = randrange(3,6)
         self.vision = randrange(3,6)
         self.energy_gain = randrange(3,6)
-
-        # Druids have forms represented by numbers
-        self.form = 0
 
     # Represented on the map with D
     def get_symbol(self) -> str:
@@ -171,15 +170,14 @@ class Sprinter(Thief):
 # Shadow
 # Slippery Thief that hides in the darkness
 class Shadow(Thief):
+    # Shadows have a default stealth level of 1 instead of 0
+    stealth = 1
 
     def __init__(self, location: int):
         self.location = location
         self.movement = randrange(3,6)
         self.vision = randrange(3,6)
         self.energy_gain = randrange(3,6)
-
-        # Shadows have a default stealth level of 1 instead of 0
-        self.stealth = 1
 
     # Represented on the map with H
     def get_symbol(self) -> str:
