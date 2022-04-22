@@ -26,21 +26,6 @@ class Blood_hunter(Guard):
         + "Blood Scent: Sniff out nearby enemies\n"
         + "Blood Rite: Destroy Thieves in a 3x3 grid")
 
-    # Takes input from player asking which ability to be used, executes
-    # appropriately in sub class
-    def ability_selection(self, map: Map, choice: int):
-        if (choice == "1"):
-            self.track()
-        elif (choice == "2"):
-            # TODO: Implement targetting system
-            self.blood_scent(map)
-        elif (choice == "3"):
-            # TODO: Implement targetting system
-            self.blood_rite(map, target)
-        else:
-            print("Invalid selection")
-            return "invalid"
-
     # Blood Hunter can move through forest tiles, like a Thief
     # They still cannot see through them
     def move(self, map: Map, new_location: int):
@@ -58,6 +43,21 @@ class Blood_hunter(Guard):
             # If move isn't valid, return as a fail
             print("Cannot move to location")
             return True
+
+    # Takes input from player asking which ability to be used, executes
+    # appropriately in sub class
+    def ability_selection(self, map: Map, choice: int):
+        if (choice == "1"):
+            self.track()
+        elif (choice == "2"):
+            # TODO: Implement targetting system
+            self.blood_scent(map)
+        elif (choice == "3"):
+            # TODO: Implement targetting system
+            self.blood_rite(map, target)
+        else:
+            print("Invalid selection")
+            return "invalid"
 
     # Indicate tiles that Thieves have been on in the last 2 turns
     def track(self, map: Map):

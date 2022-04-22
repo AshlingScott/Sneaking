@@ -3,6 +3,8 @@
 # Units can be Thief or Guard, which are opposing types
 
 from abc import *
+from random import randrange
+
 from Map import *
 
 class Unit(ABC):
@@ -31,11 +33,11 @@ class Unit(ABC):
     # How many talent points are available
     talent_points = 0
 
-    # Static base stats are set based on the subclass selected
-    # These stats include:
+    # Other stats (set by class constructors):
     # Movement: How many tiles a Unit can move in one turn
     # Vision: How far a Unit can see
     # Energy_gain: How much energy a Unit gains each turn
+
     @abstractmethod
     def __init__(self):
         pass
@@ -75,6 +77,11 @@ class Unit(ABC):
         # Increment energy by energy_gain
         self.energy += self.energy_gain
 
+    # Disable method sets status of the unit to disabled.  This is a function
+    # to allow overwriting potential
+    def disable(self):
+        self.disabled = True
+
     # Apply effects that expire at end of a turn
     def end_turn(self):
         # Remove disabled effect
@@ -92,7 +99,7 @@ class Unit(ABC):
         for item in self.items:
             print(item.description)
 
-# Thief - Abstract
+# Thief
 #Sneak into the base and steal treasures to win rounds
 class Thief(Unit):
     # Whether the Thief is alive
@@ -135,7 +142,7 @@ class Thief(Unit):
 
         # TODO: Add alter / item based vision to the set
 
-# Guard - Abstract
+# Guard
 # Prevent thieves from breaking in to win rounds
 class Guard(Unit):
     # List of tiles that are lighted up by character
@@ -177,3 +184,76 @@ class Guard(Unit):
                 vision_tiles.add(val)
 
         return vision_tiles
+
+# Rosters are collections of Units.  A Team is a selection of Units
+# from a roster for a given game/mission/map
+class Roster:
+    # Max number of units on a roster
+    maximum = 10
+    # List of units on roster
+    unit_list = []
+
+    def __init__(self):
+        pass
+
+    # Add a unit to the rester, if the roster is already full return false
+    def add_unit(self, unit: Unit):
+        if (len(self.unit_list) < self.maximum):
+            self.unit_list.append(unit)
+        else:
+            print("Roster size is maximum already")
+            return False
+
+    # TODO: implement Teams
+
+
+# The recruiting shop where you can purchase new units
+# Currently offers 3 random units, with different prices
+class Recruit_Board():
+    # List of recruits in the shop
+    recruits = []
+    # prices of recruits
+    prices = []
+
+    # Create 3 random characters and add to board
+    def __init__(self):
+        for x in range(3):
+            z = randrange(0,5)
+                self.recruits.append(random_unit())
+                # Set price in corresponding list
+                self.prices.append(rangerange(0,5))
+
+    # Create a random unit.  Used on initialization and when a purchase is made
+    def random_unit() -> Unit:
+        z = randrange(0,5)
+        if (z == 0):
+            unit = Druid(None)
+        elif (z == 1):
+            unit = Sprinter(None)
+        elif (z == 2):
+            unit = Shadow(None)
+        elif (z == 3):
+            unit = Blood_hunter(None)
+        elif (z == 4):
+            unit = Golem(None)
+        else:
+            unit = Techie(None)
+
+        return unit
+
+    # Select a unit from the board and add it to the roster, then replace
+    def select_unit(roster: Roster, choice: int):
+        # Tries to add a unit, only on succeeding will it make a new one
+        if (roster.add_unit(self.recruits[choice-1])):
+            self.recruits[choice-1] = random_unit()
+            prices[-1] = randrange(0,5)
+        else:
+            print("Roster is full")
+
+    # Prints out the list of current units on the recruit board
+    def print_board():
+        for x in range(3):
+            print{"\n"}
+            recruits.print_stats()
+            print{"\n"}
+            print(self.prices[x])

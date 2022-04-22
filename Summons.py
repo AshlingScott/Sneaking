@@ -51,6 +51,7 @@ class Summon(Unit):
 
 #  Summoned by the Hunter Guard, wolves are fast and (???)
 class Wolf(Summon):
+
     permanent = False
 
     # Wolves have 6 movement, 4 vision, and no energy or energy gain
@@ -76,6 +77,7 @@ class Wolf(Summon):
 #  Stasis traps are permanent summons that wait for a thief to walk over them
 #  and destroy themselves to disable the triggerer
 class Stasis(Summon):
+
     permanent = True
 
     # Stasis has no movement and no vision
