@@ -112,15 +112,13 @@ class Thief(Unit):
         map.tile_list[self.location].occupant = None
 
     # Moves to target tile, Thieves can move on 0 or 1 type tiles
-    def move(self, map: Map, new_location: int):
-        if (map.tile_list[new_location].type <= 1):
+    def move(self, map: Map, new_location: Tile):
+        if (new_location.type <= 1):
             # Remove from previous location
-            map.tile_list[self.location].occupant = None
-            map.tile_list[self.location].occupied = False
+            self.location.occupant = None
             # Update to new location
             self.location = new_location
-            map.tile_list[new_location].occupied = True
-            map.tile_list[new_location].occupant = self
+            new_location.occupant = self
             # Update visible_tiles
             self.update_vision(map)
         else:
@@ -129,16 +127,16 @@ class Thief(Unit):
             return True
 
     # Gets vision range of Unit, Thieves can see type 0 and 1 tiles
-    def update_vision(self, map: Map):
+    def get_vision(self, map: Map) -> set:
         vision_tiles = set()
         # Grab a square based on Units vision
-        grab_vision = map.grab_square(map, map.tile_list[self.location], self.vision)
-        # Adds only tiles of type 1 or 0 to the set
-        for tile in grab_vision:
-            if (tile.type <= 1):
-                vision_tiles.add(tile)
+        grab_vision = map.grab_square(map, self.location, self.vision)
+        # Adds only tiles of type 0 or 1 to the set
+        for val in grab_vision:
+            if (val.type < 2):
+                vision_tiles.add(val)
 
-        visible_tiles = vision_tiles
+        return vision_tiles
 
         # TODO: Add alter / item based vision to the set
 
@@ -156,13 +154,13 @@ class Guard(Unit):
     def move(self, map: Map, new_location: int):
         if (map.tile_list[new_location].type == 0):
             # Remove from previous location
-            map.tile_list[self.location].occupant = None
-            map.tile_list[self.location].occupied = False
+            self.location.occupant = None
             # Update to new location
             self.location = new_location
-            map.tile_list[new_location].occupied = True
-            map.tile_list[new_location].occupant = self
+            new_location.occupant = self
             # Update visible_tiles
+            self.update_vision(map)
+
             vision = self.get_vision(map)
             for summon in summons:
                 vision = vision.union(summon.get_vision(map))
@@ -177,7 +175,7 @@ class Guard(Unit):
     def get_vision(self, map: Map) -> set:
         vision_tiles = set()
         # Grab a square based on Units vision
-        grab_vision = map.grab_square(map, map.tile_list[self.location], self.vision)
+        grab_vision = map.grab_square(map, self.location, self.vision)
         # Adds only tiles of type 0 to the set
         for val in grab_vision:
             if (val.type == 0):
@@ -246,7 +244,7 @@ class Recruit_Board():
         # Tries to add a unit, only on succeeding will it make a new one
         if (roster.add_unit(self.recruits[choice-1])):
             self.recruits[choice-1] = random_unit()
-            prices[-1] = randrange(0,5)
+            prices[choice-1] = randrange(0,5)
         else:
             print("Roster is full")
 
