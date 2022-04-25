@@ -9,7 +9,7 @@ class Druid(Thief):
     # Druids have forms represented by numbers
     form = 0
 
-    def __init__(self, location: int):
+    def __init__(self, location: Tile):
         self.location = location
         self.movement = randrange(3,6)
         self.vision = randrange(3,6)
@@ -106,7 +106,7 @@ class Druid(Thief):
 # Agile Thief able to outrun enemies
 class Sprinter(Thief):
 
-    def __init__(self, location: int):
+    def __init__(self, location: Tile):
         self.location = location
         self.movement = randrange(3,6)
         self.vision = randrange(3,6)
@@ -173,7 +173,7 @@ class Shadow(Thief):
     # Shadows have a default stealth level of 1 instead of 0
     stealth = 1
 
-    def __init__(self, location: int):
+    def __init__(self, location: Tile):
         self.location = location
         self.movement = randrange(3,6)
         self.vision = randrange(3,6)

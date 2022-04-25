@@ -27,7 +27,7 @@ class Map:
         # Tries to load map from CSV file
         if isinstance(args[0], str):
             try:
-                with open("MapFiles/" + args[0] + ".csv", 'r') as file:
+                with open("Data/MapFiles/" + args[0] + ".csv", 'r') as file:
                     csvreader = csv.reader(file)
                     for y in range(10):
                         line = next(csvreader)

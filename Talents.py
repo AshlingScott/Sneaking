@@ -5,16 +5,16 @@ import json
 from abc import *
 
 class Talent(ABC):
-    # The talents that link to this talent
-    connections = []
 
-    def __init__(self, name: str, description: str, active: bool,
-            tier: int, effects: list):
+    def __init__(self, id: int, name: str, description: str, active: bool,
+            tier: int, effects: list, connections: list):
+        self.id = id
         self.name = name
         self.description = description
         self.active = active
         self.tier = tier
         self.effects = effects
+        self.connections = connections
 
 class TalentTree:
 
@@ -23,16 +23,13 @@ class TalentTree:
         talent_tree = []
 
         # Load talent tree from json
-        file = open("Data/TalentTree.json")
+        file = open("Data/Talents/TalentTree.json")
         data = json.load(file)
 
-        # Put talents in talent tree list
+        # Put talents into the talent tree list
         for x in data["talents"]:
-            y = Talent(x["name"], x["description"], x["active"], x["tier"], x["effects"])
-            talent_tree.append(y)
-
-        # Links talents together
-        # TODO
+            self.talent_tree.append(Talent(x["id"], x["name"], x["description"],
+            x["active"], x["tier"], x["effects"], x["connections"]))
 
     # returns list of talents
     def get_list():

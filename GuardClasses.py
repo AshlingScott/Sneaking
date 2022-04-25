@@ -2,6 +2,7 @@
 
 from Unit import *
 from random import randrange
+from Summons import *
 
 # Blood Hunter
 # Guard that tracks down enemies through the forest
@@ -213,9 +214,11 @@ class Techie(Guard):
 
     # Drop a stasis trap on a field tile, disables thieves who step within 1 range
     def stasis_trap(self, map: Map, target: Tile):
-        if (target.type == 0):
+        if ((target.type == 0) and (target.occupant == False)):
             self.energy -= 5
-            #TODO: Create summon on this tiles
+
+            #Create summon on this tiles
+            target.occupant = Stasis_trap(target.id, self)
         else:
             print("Can't place trap here")
 

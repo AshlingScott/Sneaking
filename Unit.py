@@ -14,8 +14,6 @@ class Unit(ABC):
     disabled = False
     # Flying units can move on any tiles and can see over walls/forest
     flying = False
-    # Whether Unit is holding the treasure
-    has_treasure = False
     # Stealth value 0 is fully visible, 1 is light invis, 2 is heavy invis
     stealth = 0
     # Energy is a resource used for abilities
@@ -104,6 +102,8 @@ class Unit(ABC):
 class Thief(Unit):
     # Whether the Thief is alive
     alive = True
+    # Whether Thief is holding the treasure
+    has_treasure = False
 
     # Kills the thief
     def kill(self, map: Map):
@@ -202,8 +202,22 @@ class Roster:
             print("Roster size is maximum already")
             return False
 
-    # TODO: implement Teams
+class Team:
+    # Max number of units on a Team
+    maximum = 3
+    # List of units on Team
+    unit_list = []
 
+    def __init__(self):
+        pass
+
+    # Add a unit to the rester, if the roster is already full return false
+    def add_unit(self, unit: Unit):
+        if (len(self.unit_list) < self.maximum):
+            self.unit_list.append(unit)
+        else:
+            print("Team size is maximum already")
+            return False
 
 # The recruiting shop where you can purchase new units
 # Currently offers 3 random units, with different prices

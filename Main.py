@@ -11,16 +11,16 @@ from Talents import *
 from Roster import *
 
 # Prompt to choose a character
-def char_select() -> None:
+def char_select():
     char = input("Choose your Character - Druid, Shadow, Golem, Techie\n")
     if (char == "Druid"):
-        return Druid(52)
+        return Druid(tile_list[52])
     elif (char == "Shadow"):
-        return Shadow(52)
+        return Shadow(tile_list[52])
     elif (char == "Golem"):
-        return Golem(52)
+        return Golem(tile_list[52])
     elif (char == "Techie"):
-        return Techie(52)
+        return Techie(tile_list[52])
     else:
         # If invalid input, re-enter char_select
         print("Not a valid character")
@@ -120,8 +120,10 @@ chosen.print_stats()
 
 map = Map("Horseshoe")
 
+# Updates vision after each turn
 chosen.update_vision(map)
 
+# Upkeep runs turn by turn effects, like buff durations and energy regen
 chosen.upkeep()
 chosen.print_stats()
 
