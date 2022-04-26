@@ -9,11 +9,12 @@ from Summons import *
 # Capable of walking through forest, unlike other Guards
 class Blood_hunter(Guard):
 
-    def __init__(self, location: int):
+    def __init__(self, location: Tile):
         self.location = location
         self.movement = randrange(3,6)
         self.vision = randrange(3,6)
         self.energy_gain = randrange(3,6)
+        self.attack_range = 1
 
     # Represented on the map by B
     def get_symbol(self) -> str:
@@ -22,7 +23,7 @@ class Blood_hunter(Guard):
     def print_stats(self):
         print("Blood Hunter" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\nAbilities\n"
+        + str(self.energy_gain) + "\Attack Range: " + attack_range + "\nAbilities\n"
         + "Track: Detect places where Thieves have been recently"
         + "Blood Scent: Sniff out nearby enemies\n"
         + "Blood Rite: Destroy Thieves in a 3x3 grid")
@@ -95,11 +96,12 @@ class Golem(Guard):
     # 1 means that block is ready
     block = 0
 
-    def __init__(self, location: int):
+    def __init__(self, location: Tile):
         self.location = location
         self.movement = randrange(3,6)
         self.vision = randrange(3,6)
         self.energy_gain = randrange(3,6)
+        self.attack_range = 1
 
     # Represented on the map by G
     def get_symbol(self) -> str:
@@ -108,7 +110,7 @@ class Golem(Guard):
     def print_stats(self):
         print("Golem" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\nAbilities\n"
+        + str(self.energy_gain) + "\Attack Range: " + attack_range + "\nAbilities\n"
         + "Charge: Dash to target tile, and disable nearby thieves\n"
         + "Smash: Destroy nearby wall, making it a field\n"
         + "Armor Up: Block the next disabling effect for 3 turns")
@@ -178,11 +180,12 @@ class Golem(Guard):
 # Trap-laying Guard with unique utility
 class Techie(Guard):
 
-    def __init__(self, location: int):
+    def __init__(self, location: Tile):
         self.location = location
         self.movement = randrange(3,6)
         self.vision = randrange(3,6)
         self.energy_gain = randrange(3,6)
+        self.attack_range = 2
 
     # Represented on the map by T
     def get_symbol(self) -> str:
@@ -191,7 +194,7 @@ class Techie(Guard):
     def print_stats(self):
         print("Techie" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\nAbilities\n"
+        + str(self.energy_gain) + "\Attack Range: " + attack_range + "\nAbilities\n"
         + "Statis Trap: Drop a stasis trap, disabling thieves that come close\n"
         + "Scan: Reveal an area of the map for 1 turn\n"
         + "Hack: Reduce energy gain of all thieves for 2 turns")\
@@ -237,3 +240,65 @@ class Techie(Guard):
         for thief in thief_list:
             thief.energy_gain -= 2
         # TODO: Apply a duration alter to effect
+
+# Sniper
+# Sharpshooter good at holding down space and slaying Thieves from longe range
+class Sniper(Guard):
+
+    def __init__(self, location: Tile):
+        self.location = location
+        self.movement = randrange(3,6) - 1
+        self.vision = randrange(3,6) + 3
+        self.energy_gain = randrange(3,6) - 1
+        self.attack_range = 4
+
+    # Represented on the map by G
+    def get_symbol(self) -> str:
+        return "N"
+
+    def print_stats(self):
+        print("Sniper" + "\nMovement: " + str(self.movement) + "\nVision: "
+        + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
+        + str(self.energy_gain) + "\nAbilities\n"
+        + "Intuition: Intuit locatino of nearest Thief, giving a direction"\n"
+        + "Take Aim: Gain increased aim until your next turn\n"
+        + "Prowl: Gain level 1 stealth until your next turn")
+
+    # Takes input from player asking which ability to be used, executes
+    # appropriately in sub class
+    def ability_selection(self, map: Map, choice: int):
+        if (choice == "1"):
+            # TODO: Implement targetting system
+            self.intuition(map)
+        elif (choice == "2"):
+            # TODO: Implement targetting system
+            self.take_aim()
+        elif (choice == "3"):
+            self.prowl()
+        else:
+            print("Invalid selection")
+            return "invalid"
+
+    # The Sniper gains an idea of where the nearest thief is, indicating
+    # a direction
+    def intuition(self, map: Map):
+        self.energy -= 3
+        # TODO: Find closest Thief (spiraling kind of search?)
+
+    # Sniper increases his attack range for this turn
+    def take_aim(self):
+        self.energy -= 2
+        # Create an alter that increases attack_range temporarily
+        # Apply it then add it to the alter list
+        take_aim_buff = Alter("Take Aim", False, 1, True, self, 2, self)
+        take_aim_buff.apply()
+        self.alters.append(take_aim_buff)
+
+    # Gain minor invisibility until your next turn
+    def prowl(self):
+        self.energy -= 3
+        # Create an alter that increases stealth temporarily
+        # Apply it then add it to the alter list
+        prowl_buff = Speed_Alter("Prowl", False, 1, True, self, 1, self)
+        prowl_buff.apply()
+        self.alters.append(prowl_buff)

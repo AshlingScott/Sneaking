@@ -8,8 +8,9 @@ class Alter(ABC):
     # Positive is whether the alter is beneficial or harmful
     # Magnitude is an integer value associated with the alter strength
     # Source is the source of the alter, usually either a Unit or Item
-    def __init__(self, permanent: bool, duration: int, positive: bool,
+    def __init__(self, name: str, permanent: bool, duration: int, positive: bool,
             own: Unit, mag: int, source):
+        self.name = name
         self.permanent = permanent
         self.duration = duration
         self.positive = positive
@@ -31,25 +32,53 @@ class Alter(ABC):
         return self.duration
 
 # Speed alter, found on Boots of Speed or speed boosts
-class Speed(Alter):
+class Speed_Alter(Alter):
 
     def apply(self):
         self.owner.movement += self.magnitude
+    def remove(self):
+        self.owner.movement -= self.magnitude
 
 # Vision alter, found on spyglass or vision boosts
-class Vision(Alter):
+class Vision_Alter(Alter):
 
     def apply(self):
         self.owner.vision += self.magnitude
 
+    def remove(self):
+        self.owner.vision -= self.magnitude
+
 # Max Energy alter, found on Power Well
-class Energy(Alter):
+class Energy_Alter(Alter):
 
     def apply(self):
         self.owner.energy += self.magnitude
 
+    def remove(self):
+        self.owner.energy -= self.magnitude
+
 # Energy gain alter, found on Energy Charm
-class Energy_Gain(Alter):
+class Energy_Gain_Alter(Alter):
 
     def apply(self):
         self.owner.energy_gain += self.magnitude
+
+    def remove(self):
+        self.owner.energy_gain -= self.magnitude
+
+# Range increase Alters
+class Attack_Range_Alter(Alter):
+
+    def apply(self):
+        self.owner.attack_range += self.magnitude
+
+    def remove(self):
+        self.owner.energy_gain -= self.magnitude
+
+class Stealth_Buff(Alter):
+
+    def apply(self):
+        self.owner.stealth += self.magnitude
+
+    def remove(self):
+        self.owner.stealth -= self.magnitude

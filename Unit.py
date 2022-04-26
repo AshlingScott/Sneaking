@@ -6,6 +6,8 @@ from abc import *
 from random import randrange
 
 from Map import *
+from Alter import *
+from Item import *
 
 class Unit(ABC):
     # Whether enemy team can see Unit
@@ -145,6 +147,9 @@ class Thief(Unit):
 class Guard(Unit):
     # List of tiles that are lighted up by character
     light_area = []
+    # Guards can attack Thieves, doing half their health each time
+    # Each Guard has an attack range
+    attack_range = None
 
     # Guards can't die
     def kill(self):

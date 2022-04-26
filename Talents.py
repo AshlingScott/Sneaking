@@ -33,4 +33,4 @@ class TalentTree:
 
     # returns list of talents
     def get_list():
-        return talent_tree
+        return self.talent_tree
