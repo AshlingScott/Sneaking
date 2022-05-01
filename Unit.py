@@ -34,6 +34,7 @@ class Unit(ABC):
     talent_points = 0
 
     # Other stats (set by class constructors):
+    # HP: How many hits a thief can take before it dies
     # Movement: How many tiles a Unit can move in one turn
     # Vision: How far a Unit can see
     # Energy_gain: How much energy a Unit gains each turn

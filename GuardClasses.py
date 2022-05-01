@@ -11,10 +11,11 @@ class Blood_hunter(Guard):
 
     def __init__(self, location: Tile):
         self.location = location
-        self.movement = randrange(3,6)
-        self.vision = randrange(3,6)
-        self.energy_gain = randrange(3,6)
         self.attack_range = 1
+        self.movement = randrange(5,7)
+        # The bloodhunter can only see what is immediately around it
+        self.vision = 1
+        self.energy_gain = randrange(2,4)
 
     # Represented on the map by B
     def get_symbol(self) -> str:
@@ -23,13 +24,20 @@ class Blood_hunter(Guard):
     def print_stats(self):
         print("Blood Hunter" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\Attack Range: " + attack_range + "\nAbilities\n"
+        + str(self.energy_gain) + "\Attack Range: " + attack_range)
+        # Print Abilities
+        self.print_abilities()
+
+    # Prints out a list of the units abilities
+    def print_abilities(self):
+        print("\nAbilities\n"
         + "Track: Detect places where Thieves have been recently"
         + "Blood Scent: Sniff out nearby enemies\n"
         + "Blood Rite: Destroy Thieves in a 3x3 grid")
 
     # Blood Hunter can move through forest tiles, like a Thief
-    # They still cannot see through them
+    # They still cannot see through forests
+    # Override the default move function
     def move(self, map: Map, new_location: int):
         if (map.tile_list[new_location].type <= 1):
             # Remove from previous location
@@ -92,15 +100,16 @@ class Blood_hunter(Guard):
 # TODO: Implement immunity to disables.  This might require an abstract
 # Disable method in Unit (also works for temporary immunity alters)
 class Golem(Guard):
-    # Block indicates whether a disable will be blocked.  0 means no block,
-    # 1 means that block is ready
-    block = 0
+    # Block indicates whether a disable will be blocked
+    block = False
+    # Overcharge state will cause the golem to autokill any thief attacked
+    overcharge = False
 
     def __init__(self, location: Tile):
         self.location = location
-        self.movement = randrange(3,6)
-        self.vision = randrange(3,6)
-        self.energy_gain = randrange(3,6)
+        self.movement = randrange(2,4)
+        self.vision = randrange(3,5)
+        self.energy_gain = randrange(2,4)
         self.attack_range = 1
 
     # Represented on the map by G
@@ -110,16 +119,22 @@ class Golem(Guard):
     def print_stats(self):
         print("Golem" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\Attack Range: " + attack_range + "\nAbilities\n"
+        + str(self.energy_gain) + "\Attack Range: " + attack_range + "\nAbilities\n")
+        # Print Abilities
+        self.print_abilities()
+
+    # Prints out a list of the units abilities
+    def print_abilities(self):
+        print("\nAbilities\n"
         + "Charge: Dash to target tile, and disable nearby thieves\n"
         + "Smash: Destroy nearby wall, making it a field\n"
         + "Armor Up: Block the next disabling effect for 3 turns")
 
     # Overwrites the disable function to allow blocking to work
     def disable(self):
-        if (self.block == 1):
+        if (self.block == True):
             print("Disable blocked by Golem's power armor")
-            self.block = 0
+            self.block = False
         else:
             self.disabled = True
 
@@ -134,6 +149,8 @@ class Golem(Guard):
             self.smash(map, target)
         elif (choice == "3"):
             self.armor_up()
+        elif (choice == "4"):
+            self.double_hit()
         else:
             print("Invalid selection")
             return "invalid"
@@ -173,8 +190,15 @@ class Golem(Guard):
     # Block the next disabling effect, last 3 returns
     def armor_up(self):
         self.energy -= 3
-        # Sets block to 1, enabling blocking of disable
-        block = 1
+        # Sets block to True, enabling blocking of disable
+        block = True
+
+    # SHOULD this return a variable to indicate turn is over????
+    # Ends your turn.  During your next turn, all attacks will auto-kill Thieves
+    def overcharge(self):
+        self.energy -= 5
+        # Turns overcharge on
+        overcharge = True
 
 # Techie
 # Trap-laying Guard with unique utility
@@ -182,9 +206,9 @@ class Techie(Guard):
 
     def __init__(self, location: Tile):
         self.location = location
-        self.movement = randrange(3,6)
-        self.vision = randrange(3,6)
-        self.energy_gain = randrange(3,6)
+        self.movement = randrange(2,3)
+        self.vision = randrange(3,5)
+        self.energy_gain = randrange(3,5)
         self.attack_range = 2
 
     # Represented on the map by T
@@ -194,10 +218,16 @@ class Techie(Guard):
     def print_stats(self):
         print("Techie" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\Attack Range: " + attack_range + "\nAbilities\n"
+        + str(self.energy_gain) + "\Attack Range: " + attack_range)
+        # Print Abilities
+        self.print_abilities()
+
+    # Prints out a list of the units abilities
+    def print_abilities(self):
+        print("\nAbilities\n"
         + "Statis Trap: Drop a stasis trap, disabling thieves that come close\n"
         + "Scan: Reveal an area of the map for 1 turn\n"
-        + "Hack: Reduce energy gain of all thieves for 2 turns")\
+        + "Hack: Reduce energy gain of all thieves for 2 turns")
 
     # Takes input from player asking which ability to be used, executes
     # appropriately in sub class
@@ -247,9 +277,9 @@ class Sniper(Guard):
 
     def __init__(self, location: Tile):
         self.location = location
-        self.movement = randrange(3,6) - 1
-        self.vision = randrange(3,6) + 3
-        self.energy_gain = randrange(3,6) - 1
+        self.movement = randrange(2,4)
+        self.vision = randrange(6,8)
+        self.energy_gain = randrange(2,3)
         self.attack_range = 4
 
     # Represented on the map by G
@@ -259,7 +289,13 @@ class Sniper(Guard):
     def print_stats(self):
         print("Sniper" + "\nMovement: " + str(self.movement) + "\nVision: "
         + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\nAbilities\n"
+        + str(self.energy_gain))
+        # Print Abilities
+        self.print_abilities()
+
+    # Prints out a list of the units abilities
+    def print_abilities(self):
+        print("\nAbilities\n"
         + "Intuition: Intuit locatino of nearest Thief, giving a direction"\n"
         + "Take Aim: Gain increased aim until your next turn\n"
         + "Prowl: Gain level 1 stealth until your next turn")

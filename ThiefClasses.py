@@ -11,9 +11,10 @@ class Druid(Thief):
 
     def __init__(self, location: Tile):
         self.location = location
-        self.movement = randrange(3,6)
-        self.vision = randrange(3,6)
-        self.energy_gain = randrange(3,6)
+        self.HP = 3
+        self.movement = randrange(3,5)
+        self.vision = randrange(4,7)
+        self.energy_gain = randrange(2,4)
 
     # Represented on the map with D
     def get_symbol(self) -> str:
@@ -27,9 +28,10 @@ class Druid(Thief):
             form = "Hawk"
         if (self.form == 2):
             form = "Squirrel"
-        print("Druid" + "\nMovement: " + str(self.movement) + "\nVision: "
-        + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\nCurrent Form: " + form)
+        print("Druid" + "\nHP: " + str(self.HP) + "\nMovement: " +
+        str(self.movement) + "\nVision: " + str(self.vision) + "\nEnergy: " +
+        str(self.energy) + "\nEnergy Gain: "+ str(self.energy_gain) +
+        "\nCurrent Form: " + form)
         # Print abilities after attributes
         self.print_abilities()
 
@@ -108,21 +110,28 @@ class Sprinter(Thief):
 
     def __init__(self, location: Tile):
         self.location = location
-        self.movement = randrange(3,6)
-        self.vision = randrange(3,6)
-        self.energy_gain = randrange(3,6)
+        self.HP = 2
+        self.movement = randrange(5,7)
+        self.vision = randrange(4,6)
+        self.energy_gain = randrange(2,3)
 
     # Represented on the map with S
     def get_symbol(self) -> str:
         return "S"
 
     def print_stats(self):
-        print("Druid" + "\nMovement: " + str(self.movement) + "\nVision: "
-        + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\nAbilities\n"
-        + "Sprint: Run faster for 2 turns\n"
-        + "Throw: Throw an item or a treasure to another Thief\n"
-        + "Vault: Leap to target tile, can jump onto walls (can walk off later)")
+        print("Sprinter" + "\nHP: " + str(self.HP) + "\nMovement: " +
+        str(self.movement) + "\nVision: " + str(self.vision) + "\nEnergy: " +
+        str(self.energy) + "\nEnergy Gain: "+ str(self.energy_gain))
+        # Print abilities
+        self.print_abilities()
+
+    # Prints out a list of the units abilities
+    def print_abilities(self):
+        print("Abilities\n"
+        + "1 - Sprint: Run faster for 2 turns\n"
+        + "2 - Throw: Throw an item or a treasure to another Thief\n"
+        + "3 - Vault: Leap to target tile, can jump onto walls (can walk off later)")
 
     # Takes input from player asking which ability to be used, executes
     # appropriately in sub class
@@ -175,18 +184,25 @@ class Shadow(Thief):
 
     def __init__(self, location: Tile):
         self.location = location
-        self.movement = randrange(3,6)
-        self.vision = randrange(3,6)
-        self.energy_gain = randrange(3,6)
+        self.HP = 2
+        self.movement = randrange(3,4)
+        self.vision = randrange(4,6)
+        self.energy_gain = randrange(3,4)
 
     # Represented on the map with H
     def get_symbol(self) -> str:
         return "H"
 
     def print_stats(self):
-        print("Shadow" + "\nMovement: " + str(self.movement) + "\nVision: "
-        + str(self.vision) + "\nEnergy: " + str(self.energy) + "\nEnergy Gain: "
-        + str(self.energy_gain) + "\nAbilities\n"
+        print("Shadow" + "\nHP: " + str(self.HP) + "\nMovement: " +
+        str(self.movement) + "\nVision: " + str(self.vision) + "\nEnergy: " +
+        str(self.energy) + "\nEnergy Gain: " + str(self.energy_gain))
+        # Print out Abilities
+        self.print_abilities()
+
+# Prints out a list of the units abilities
+    def print_abilities(self):
+        print("Abilities\n"
         + "Shadow Dance: Gain increased stealth for 2 turns\n"
         + "Dark Warp: Teleport to target tile\n"
         + "Blind: Reduce the vision of a Guard by 2 for 2 turns")
