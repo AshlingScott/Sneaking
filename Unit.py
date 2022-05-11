@@ -89,11 +89,21 @@ class Unit(ABC):
         self.disabled = False
 
     # Equips an item to the Unit
-    def add_item(self, item):
+    # Return value is whether or not addition was successful
+    def add_item(self, item: Item, roster: Roster):
+        # Check that roster has enough money
+        if (roster.curr_gold < item.price):
+            print("Not enough gold for item")
+            return False
+
+        # Remove item cost
+        roster.curr_gold -= item.price
         # Add item to players item list
         self.items.append(item)
         # Add the items alters to the players alter list
         self.alters += item.alters
+
+        return True
 
     # Print out a list of items unit is holding
     def print_items(self):
@@ -111,6 +121,7 @@ class Thief(Unit):
     # Kills the thief
     def kill(self, map: Map):
         alive = False
+        self.location = None
         map.tile_list[self.location].occupied = False
         map.tile_list[self.location].occupant = None
 
@@ -194,6 +205,10 @@ class Guard(Unit):
 class Roster:
     # Max number of units on a roster
     maximum = 10
+    # Players gold is tracked in the Roster
+    max_gold = 100
+    curr_gold = 0
+
     # List of units on roster
     unit_list = []
 
