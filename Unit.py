@@ -144,7 +144,7 @@ class Thief(Unit):
     def get_vision(self, map: Map) -> set:
         vision_tiles = set()
         # Grab a square based on Units vision
-        grab_vision = map.grab_square(map, self.location, self.vision)
+        grab_vision = map.grab_square(self.location, self.vision)
         # Adds only tiles of type 0 or 1 to the set
         for val in grab_vision:
             if (val.type < 2):

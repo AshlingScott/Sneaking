@@ -77,7 +77,7 @@ class Map:
 
     # Return a set of tiles in a square, within a range of target tile
     # Used on vision ranges, potential movements, ability targetting
-    def grab_square(self, map, target: Tile, _range_: int) -> list:
+    def grab_square(self, target: Tile, _range_: int) -> list:
         tileset = []
         # Sets the squares borders
         for x in range(-_range_, _range_ + 1):

@@ -97,7 +97,6 @@ class Blood_hunter(Guard):
 
 # Golem
 # Beefy Guard thats resilient and strong
-# TODO: Implement immunity to disables.  This might require an abstract
 # Disable method in Unit (also works for temporary immunity alters)
 class Golem(Guard):
     # Block indicates whether a disable will be blocked
@@ -264,12 +263,11 @@ class Techie(Guard):
         # Should visible tiles even be a set at this point?
 
     # Reduce vision of all enemies on the map_array
-    # TODO: Pass thief list for use here
-    def hack(self, thief_list):
+    def hack(self, thief_list: List):
         self.energy -= 3
+        # Add a vision debuff alter to each thief
         for thief in thief_list:
-            thief.energy_gain -= 2
-        # TODO: Apply a duration alter to effect
+            thief.alters.append(Vision_Alter(hack, False, 3, False, thief, 2, self))
 
 # Sniper
 # Sharpshooter good at holding down space and slaying Thieves from longe range
@@ -317,9 +315,20 @@ class Sniper(Guard):
 
     # The Sniper gains an idea of where the nearest thief is, indicating
     # a direction
-    def intuition(self, map: Map):
+    def intuition(self, map: Map, thief_list: List):
         self.energy -= 3
-        # TODO: Find closest Thief (spiraling kind of search?)
+
+        # Find closest thief, spiraling out from current location
+        closest = None
+        distance = 1
+        while (closest == None):
+            square = map.grab_square(self.location.id, distance)
+            for tile in square:
+                if (tile.occupant):
+                    closest = tile.occupant
+
+        # Add the closest thieves tile to vision
+        self.visible_tiles.add(closest.location)
 
     # Sniper increases his attack range for this turn
     def take_aim(self):

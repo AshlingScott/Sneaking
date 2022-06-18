@@ -5,6 +5,13 @@ from abc import *
 from Unit import *
 
 class Alter(ABC):
+
+    @abstractmethod
+    def __init__(self):
+        pass
+
+# Integer Alters provide a flat integer buff to an attribute
+class Integer_Alter(Alter):
     # Positive is whether the alter is beneficial or harmful
     # Magnitude is an integer value associated with the alter strength
     # Source is the source of the alter, usually either a Unit or Item
@@ -32,7 +39,7 @@ class Alter(ABC):
         return self.duration
 
 # Speed alter, found on Boots of Speed or speed boosts
-class Speed_Alter(Alter):
+class Speed_Alter(Integer_Alter):
 
     def apply(self):
         self.owner.movement += self.magnitude
@@ -40,7 +47,7 @@ class Speed_Alter(Alter):
         self.owner.movement -= self.magnitude
 
 # Vision alter, found on spyglass or vision boosts
-class Vision_Alter(Alter):
+class Vision_Alter(Integer_Alter):
 
     def apply(self):
         self.owner.vision += self.magnitude
@@ -49,7 +56,7 @@ class Vision_Alter(Alter):
         self.owner.vision -= self.magnitude
 
 # Max Energy alter, found on Power Well
-class Energy_Alter(Alter):
+class Energy_Alter(Integer_Alter):
 
     def apply(self):
         self.owner.energy += self.magnitude
@@ -58,7 +65,7 @@ class Energy_Alter(Alter):
         self.owner.energy -= self.magnitude
 
 # Energy gain alter, found on Energy Charm
-class Energy_Gain_Alter(Alter):
+class Energy_Gain_Alter(Integer_Alter):
 
     def apply(self):
         self.owner.energy_gain += self.magnitude
@@ -67,7 +74,7 @@ class Energy_Gain_Alter(Alter):
         self.owner.energy_gain -= self.magnitude
 
 # Range increase Alters
-class Attack_Range_Alter(Alter):
+class Attack_Range_Alter(Integer_Alter):
 
     def apply(self):
         self.owner.attack_range += self.magnitude
@@ -75,10 +82,28 @@ class Attack_Range_Alter(Alter):
     def remove(self):
         self.owner.energy_gain -= self.magnitude
 
-class Stealth_Buff(Alter):
+class Stealth_Buff(Integer_Alter):
 
     def apply(self):
         self.owner.stealth += self.magnitude
 
     def remove(self):
         self.owner.stealth -= self.magnitude
+
+# Creates a temporary field of vision (or blocks one?)
+class Tile_Vision(Alter):
+
+    def __init__(self, name: str, permanent: bool, duration: int,
+            own: Unit, vis: set, source):
+        self.name = name
+        self.permanent = permanent
+        self.duration = duration
+        self.owner = own
+        self.visible_set = vis
+        self.source = source
+
+    def apply(self):
+        self.owner.visible_tiles.add(visible_set)
+
+    def remove(self):
+        #TODO: reset vision to normal
